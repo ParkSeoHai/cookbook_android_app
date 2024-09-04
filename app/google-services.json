@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "778796616238",
+    "firebase_url": "https://my-cookbook-project-1-default-rtdb.firebaseio.com",
+    "project_id": "my-cookbook-project-1",
+    "storage_bucket": "my-cookbook-project-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778796616238:android:531905235f4219703e2dbf",
+        "android_client_info": {
+          "package_name": "com.example.cookbook_k12_it3_nhom2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoQFeKADrqbGlf9phB6u_SLeYFca__wbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778796616238:android:3819ef6fcbdfacef3e2dbf",
+        "android_client_info": {
+          "package_name": "com.example.cookbook_nhom2_eaut_k12_it03"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoQFeKADrqbGlf9phB6u_SLeYFca__wbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
