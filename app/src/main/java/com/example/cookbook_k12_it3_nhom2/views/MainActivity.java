@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("start get data", "get profile");
 
-        login("parkseohai", "2803");
+
 
         register("parkseohai", "2803");
 
@@ -69,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
+
     public void register(String username, String password) {
         UserController controller = new UserController();
         controller.register(username, password, new FirestoreCallback<Boolean>() {
@@ -83,26 +85,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void login(String username, String password) {
-        UserController controller = new UserController();
-        controller.login(username, password, new FirestoreCallback<UserDto>() {
-            @Override
-            public void onSuccess(UserDto userDto) {
-                // Lưu thông tin người dùng khi đăng nhập thành công
-                sharedPreferences = getSharedPreferences("UserRefs", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username", userDto.getUsername());
-                editor.putString("email", userDto.getEmail());
-                editor.putString("name_display", userDto.getName_display());
-                editor.apply();
-                Log.i("Login", "Login success");
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Log.i("login error", e.toString());
-            }
-        });
-    }
 
     public void getRecipeDetail(String recipeId) {
         RecipeController controller = new RecipeController();
