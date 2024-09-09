@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         Log.i("start get data", "get profile");
 
-
-
         register("parkseohai", "2803");
 
 //        searchRecipeByTitle("Bún Thịt Nướng");
