@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Layer cho nền -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Màu nền -->
+        </shape>
+    </item>
+
+    <!-- Layer cho viền trên -->
+    <item android:top="1dp">
+        <shape android:shape="rectangle">
+            <size android:height="2dp" /> <!-- Độ dày của viền -->
+            <solid android:color="@color/background" /> <!-- Màu của viền -->
+        </shape>
+    </item>
+
+</layer-list>

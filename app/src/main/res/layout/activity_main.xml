@@ -1,30 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.MainActivity">
+    android:background="@color/background"
+    android:paddingTop="20dp">
 
+    <!-- Header: Tên app và các biểu tượng -->
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp">
+
+        <!-- Tên app -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:text="CookBook"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+
+        <!-- Biểu tượng tìm kiếm -->
+        <ImageView
+            android:id="@+id/searchIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:textAlignment="center"
+            android:src="@drawable/ic_search"
+            app:tint="@android:color/white" />
+
+    </LinearLayout>
+
+    <!-- Thanh tìm kiếm -->
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header"
+        android:background="@drawable/border_top"
+        android:hint="Tìm kiếm công thức..."
+        android:padding="10dp"
+        android:textSize="14sp"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/white" />
+
+    <!-- Dòng hiển thị số lượng công thức -->
     <TextView
-        android:id="@+id/text_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/recipeCount"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_below="@id/searchBar"
+        android:background="#d2d2d2"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+    <!-- Danh sách công thức nấu ăn -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipeList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@id/bottomNavigation"
+        android:layout_below="@id/recipeCount"
+        android:background="@color/background"
+        android:clipToPadding="false"
+        android:padding="8dp" />
+
+    <!-- Thanh điều hướng dưới cùng -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get recipe detail"
-        app:layout_constraintEnd_toEndOf="@+id/text_view"
-        app:layout_constraintHorizontal_bias="0.52"
-        app:layout_constraintStart_toStartOf="@+id/text_view"
-        tools:layout_editor_absoluteY="234dp" />
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_top"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/bottom_navigation_menu" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

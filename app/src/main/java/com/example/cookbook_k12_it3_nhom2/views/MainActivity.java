@@ -3,8 +3,6 @@ package com.example.cookbook_k12_it3_nhom2.views;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,18 +11,29 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookbook_k12_it3_nhom2.R;
 import com.example.cookbook_k12_it3_nhom2.controllers.CategoryController;
 import com.example.cookbook_k12_it3_nhom2.controllers.RecipeController;
 import com.example.cookbook_k12_it3_nhom2.controllers.UserController;
+import com.example.cookbook_k12_it3_nhom2.models.Recipe;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CategoryDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.UserDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    private RecyclerView mRecyclerViewRecipe;
+    private RecipeAdapter mAdapterRecipe;
+    private List<RecipeDto> mRecipeList;
+
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -32,17 +41,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
+
+        mRecyclerViewRecipe = findViewById(R.id.recipeList);
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Hiển thị 2 recipe trên 1 hàng
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        mRecyclerViewRecipe.setLayoutManager(gridLayoutManager);
+
+        showRecipes();      // Hiển thị danh sách recipe khi chạy chương trình
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                // Xử lý cho home
+                showRecipes();
+                return true;
+            } else if (id == R.id.nav_favourites) {
+                // Xử lý cho Favourites
+                return true;
+            } else if (id == R.id.nav_menu) {
+                // Xử lý cho menu
+                return true;
+            } else if (id == R.id.nav_profile) {
+                // Xử lý cho profile
+                return true;
+            }
+            return false;
         });
-
-        Log.i("start get data", "get profile");
-
-        login("parkseohai", "2803");
-
-        register("parkseohai", "2803");
 
 //        searchRecipeByTitle("Bún Thịt Nướng");
 //        getRecipeDetail("C3gIrwbppYZBYqMHNFbQ");
@@ -53,20 +85,20 @@ public class MainActivity extends AppCompatActivity {
 //        getRecipes();
 //        getRecipeById("VOOCQqhn21Dx4zL7O9OX");
 
-        Button btn = (Button) findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String username = sharedPreferences.getString("username", "empty");
-                    String email = sharedPreferences.getString("email", "empty");
-                    String name_display = sharedPreferences.getString("name_display", "empty");
-                    Toast.makeText(MainActivity.this, username + email + name_display, Toast.LENGTH_LONG).show();
-                } catch (Exception e) {
-                    Log.i("error sharedPreferences", e.getMessage());
-                }
-            }
-        });
+//        Button btn = (Button) findViewById(R.id.button);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                try {
+//                    String username = sharedPreferences.getString("username", "empty");
+//                    String email = sharedPreferences.getString("email", "empty");
+//                    String name_display = sharedPreferences.getString("name_display", "empty");
+//                    Toast.makeText(MainActivity.this, username + email + name_display, Toast.LENGTH_LONG).show();
+//                } catch (Exception e) {
+//                    Log.i("error sharedPreferences", e.getMessage());
+//                }
+//            }
+//        });
     }
 
     public void register(String username, String password) {
@@ -197,19 +229,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getRecipes() {
+    // Hiển thị danh sách recipe trong trang chủ
+    public void showRecipes() {
         RecipeController recipeController = new RecipeController();
         recipeController.getRecipes(new FirestoreCallback<List<RecipeDto>>() {
             @Override
             public void onSuccess(List<RecipeDto> result) {
-                for (RecipeDto recipe : result) {
-                    Log.i("getRecipes: recipe_" + recipe.getRecipeId(), recipe.toString());
-                }
+                mRecipeList = new ArrayList<>();
+                mRecipeList = result;
+                // Set adapter hiển thị item
+                mAdapterRecipe = new RecipeAdapter(MainActivity.this, mRecipeList);
+                mRecyclerViewRecipe.setAdapter(mAdapterRecipe);
+                // Hiển thị text recipeCount
+                TextView recipeCount = findViewById(R.id.recipeCount);
+                recipeCount.setText("Hiển thị " + result.size() + " / " + result.size() + " công thức");
+//                for (RecipeDto recipe : result) {
+//                    Log.i("getRecipes: recipe_" + recipe.getRecipeId(), recipe.toString());
+//                }
             }
-
             @Override
             public void onFailure(Exception e) {
                 Log.w("getRecipes: Error", e.toString());
+                Toast.makeText(MainActivity.this, "Lỗi khi hiển thị danh sách công thức nấu ăn", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -219,8 +260,6 @@ public class MainActivity extends AppCompatActivity {
         recipeController.getRecipeById(recipeId, new FirestoreCallback<RecipeDto>() {
             @Override
             public void onSuccess(RecipeDto result) {
-                TextView view = (TextView) MainActivity.this.findViewById(R.id.text_view);
-                view.setText(result.getTitle());
                 Log.i("getRecipeById: recipe_" + result.getRecipeId(), result.toString());
             }
 
