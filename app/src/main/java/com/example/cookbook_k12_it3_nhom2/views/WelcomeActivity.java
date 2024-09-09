@@ -30,7 +30,7 @@ public class WelcomeActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(WelcomeActivity.this, MainActivity.class);
+                Intent mainIntent = new Intent(WelcomeActivity.this, loginActivity.class);
                 startActivity(mainIntent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
