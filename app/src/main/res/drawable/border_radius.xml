@@ -5,7 +5,7 @@
     <solid android:color="#FFFFFF" />
 
     <!-- Độ bo góc -->
-    <corners android:radius="16dp" />
+    <corners android:radius="20dp" />
 
     <!-- Đường viền xung quanh (tuỳ chọn) -->
     <stroke

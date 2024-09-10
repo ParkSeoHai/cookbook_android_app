@@ -118,18 +118,18 @@ public class UserRepository {
                                 tasks.add(cmtTask);
 
                                 // Get favorites
-                                FavoriteRepository favoriteRepository = new FavoriteRepository();
-                                Task<Void> favTask = favoriteRepository.allByUserId(userDto.getUserId(), new FirestoreCallback<List<FavoriteDto>>() {
-                                    @Override
-                                    public void onSuccess(List<FavoriteDto> result) {
-                                        userDto.setFavoriteDtos(result);
-                                    }
-                                    @Override
-                                    public void onFailure(Exception e) {
-                                        callback.onFailure(e);
-                                    }
-                                });
-                                tasks.add(favTask);
+//                                FavoriteRepository favoriteRepository = new FavoriteRepository();
+//                                Task<Void> favTask = favoriteRepository.allByUserId(userDto.getUserId(), new FirestoreCallback<List<FavoriteDto>>() {
+//                                    @Override
+//                                    public void onSuccess(List<FavoriteDto> result) {
+//                                        userDto.setFavoriteDtos(result);
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Exception e) {
+//                                        callback.onFailure(e);
+//                                    }
+//                                });
+//                                tasks.add(favTask);
 
                                 // Đợi tất cả các task hoàn thành
                                 Tasks.whenAll(tasks).addOnCompleteListener(new OnCompleteListener<Void>() {

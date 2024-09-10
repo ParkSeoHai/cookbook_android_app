@@ -15,18 +15,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookbook_k12_it3_nhom2.R;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.FavoriteDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.RecipeViewHolder> {
 
     private Context mContext;
-    private List<RecipeDto> mRecipes;
+    private List<FavoriteDto> mFavorites;
 
-    public RecipeAdapter(Context context, List<RecipeDto> recipes) {
+    public FavoriteAdapter(Context context, List<FavoriteDto> favoriteDtos) {
         mContext = context;
-        mRecipes = recipes;
+        mFavorites = favoriteDtos;
     }
 
     @NonNull
@@ -38,26 +39,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
     @Override
     public void onBindViewHolder(@NonNull RecipeViewHolder holder, int position) {
-        RecipeDto recipe = mRecipes.get(position);
-        holder.recipeTitle.setText(recipe.getTitle());
-        holder.recipeId = recipe.getRecipeId();
-
-//        RequestOptions options = new RequestOptions()
-//                .transform(new RoundedCorners(20)); // border-radius
+        FavoriteDto favoriteDto = mFavorites.get(position);
+        holder.recipeTitle.setText(favoriteDto.getRecipeDto().getTitle());
+        holder.recipeId = favoriteDto.getRecipeDto().getRecipeId();
 
         // Sử dụng glide load ảnh từ url
         Glide.with(mContext)
-                .load(recipe.getImageUrl())
-//                .apply(options)
+                .load(favoriteDto.getRecipeDto().getImageUrl())
                 .placeholder(R.drawable.image_placeholder)  // Hình ảnh tạm trong khi chờ tải
                 .error(R.drawable.image_placeholder)        // Hình ảnh hiển thị khi có lỗi
                 .into(holder.recipeImage);
-//        holder.recipeImage.setImageResource(R.drawable.logo);
     }
 
     @Override
     public int getItemCount() {
-        return mRecipes.size();
+        return mFavorites.size();
     }
 
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
@@ -70,19 +66,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             recipeImage = itemView.findViewById(R.id.recipeImage);
             recipeTitle = itemView.findViewById(R.id.recipeTitle);
 
-            recipeImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Xử lý sự kiện click image recipe
-                    Intent intent = new Intent(itemView.getContext(), RecipeDetailActivity.class);
-                    if (recipeId != null) {
-                        intent.putExtra("recipeId", recipeId);
-                        // Mở activity recipe detail
-                        itemView.getContext().startActivity(intent);
-                    } else {
-                        Toast.makeText(itemView.getContext(), "Recipe id is null", Toast.LENGTH_LONG).show();
-                    }
-                    Log.i("click image", "Clicked " + recipeTitle);
+            recipeImage.setOnClickListener(v -> {
+                // Xử lý sự kiện click image recipe
+                Intent intent = new Intent(itemView.getContext(), RecipeDetailActivity.class);
+                if (recipeId != null) {
+                    intent.putExtra("recipeId", recipeId);
+                    // Mở activity recipe detail
+                    itemView.getContext().startActivity(intent);
+                } else {
+                    Toast.makeText(itemView.getContext(), "Recipe id is null", Toast.LENGTH_LONG).show();
                 }
             });
         }

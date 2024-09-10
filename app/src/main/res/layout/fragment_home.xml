@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.HomeFragment">
+
+    <!-- Thanh tìm kiếm -->
+        <EditText
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_top"
+            android:hint="Tìm kiếm công thức..."
+            android:padding="10dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/white" />
+
+    <!-- Dòng hiển thị số lượng công thức -->
+        <TextView
+            android:id="@+id/recipeCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searchBar"
+            android:background="#d2d2d2"
+            android:padding="5dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="13sp" />
+
+    <!-- Danh sách công thức nấu ăn -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipeList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/recipeCount"
+            android:background="@color/background"
+            android:layout_alignParentBottom="true"
+            android:clipToPadding="false"
+            android:padding="8dp" />
+
+</RelativeLayout>

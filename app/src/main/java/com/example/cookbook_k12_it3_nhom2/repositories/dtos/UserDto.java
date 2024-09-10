@@ -12,18 +12,15 @@ public class UserDto {
     private String bio; // Mô tả ngắn
     private List<RecipeDto> recipeDtos;
     private List<CommentDto> commentDtos;
-    private List<FavoriteDto> favoriteDtos;
 
     public UserDto() {
         recipeDtos = new ArrayList<>();
         commentDtos = new ArrayList<>();
-        favoriteDtos = new ArrayList<>();
     }
 
     public UserDto(String userId, String name_display, String username,
                    String email, String profile_picture, String bio,
-                   List<RecipeDto> recipeDtos, List<CommentDto> commentDtos,
-                   List<FavoriteDto> favoriteDtos) {
+                   List<RecipeDto> recipeDtos, List<CommentDto> commentDtos) {
         this.userId = userId;
         this.name_display = name_display;
         this.username = username;
@@ -32,7 +29,6 @@ public class UserDto {
         this.bio = bio;
         this.recipeDtos = recipeDtos;
         this.commentDtos = commentDtos;
-        this.favoriteDtos = favoriteDtos;
     }
 
     public String getUserId() {
@@ -99,14 +95,6 @@ public class UserDto {
         this.commentDtos = commentDtos;
     }
 
-    public List<FavoriteDto> getFavoriteDtos() {
-        return favoriteDtos;
-    }
-
-    public void setFavoriteDtos(List<FavoriteDto> favoriteDtos) {
-        this.favoriteDtos = favoriteDtos;
-    }
-
     @Override
     public String toString() {
         return "UserDto{" +
@@ -118,7 +106,6 @@ public class UserDto {
                 ", bio='" + bio + '\'' +
                 ", recipeDtos=" + recipeDtos.toString() +
                 ", commentDtos=" + commentDtos.toString() +
-                ", favoriteDtos=" + favoriteDtos.toString() +
                 '}';
     }
 }
