@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".views.RecipeAboutFragment">.
+
+    <RelativeLayout
+        android:id="@+id/recipeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Image of the recipe -->
+        <ImageView
+            android:id="@+id/recipeImage"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_placeholder"
+            android:layout_alignParentTop="true" />
+
+        <!-- Recipe title -->
+        <TextView
+            android:id="@+id/recipeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/white"
+            android:layout_below="@id/recipeImage"
+            android:layout_centerHorizontal="true" />
+
+        <!-- Serving Layout -->
+        <LinearLayout
+            android:id="@+id/servingLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:layout_below="@id/recipeTitle"
+            android:layout_centerHorizontal="true">
+
+            <!-- Star Rating Icon -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_star_24" />
+
+            <TextView
+                android:id="@+id/starCount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/white" />
+
+            <!-- Serving Icon -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/baseline_serving_24" />
+
+            <TextView
+                android:id="@+id/servingCount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <!-- Prep and Cook Time Layout -->
+        <LinearLayout
+            android:id="@+id/timeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/servingLayout"
+            android:layout_centerHorizontal="true">
+
+            <!-- Prep Time Icon -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_recipe_prep_24" />
+
+            <TextView
+                android:id="@+id/prepTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:layout_marginStart="4dp" />
+
+            <!-- Cook Time Icon -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/baseline_recipe_cook_24" />
+
+            <TextView
+                android:id="@+id/cookTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+
+        <!-- Recipe Description -->
+        <TextView
+            android:id="@+id/recipeDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/white"
+            android:text=""
+            android:textAlignment="center"
+            android:layout_below="@id/timeLayout" />
+
+        <TextView
+            android:id="@+id/recipeCommentText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá từ người dùng:"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="16dp"
+            android:paddingTop="10dp"
+            android:background="@drawable/border_top"
+            android:layout_below="@id/recipeDescription"/>
+
+        <TextView
+            android:id="@+id/recipeCommentEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@id/recipeCommentText" />
+
+        <!-- RecyclerView for comments -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewComments"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/background"
+            android:layout_below="@id/recipeCommentEmpty" />
+
+    </RelativeLayout>
+</ScrollView>

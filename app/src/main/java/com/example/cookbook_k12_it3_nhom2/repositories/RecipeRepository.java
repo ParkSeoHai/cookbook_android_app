@@ -10,6 +10,7 @@ import com.example.cookbook_k12_it3_nhom2.models.Recipe_Ingredient;
 import com.example.cookbook_k12_it3_nhom2.models.Step;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CategoryDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CommentDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.IngredientDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.UserDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
@@ -47,10 +48,10 @@ public class RecipeRepository {
         bunThitNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 3));   // Tỏi
 
         List<Step> bunThitNuongSteps = new ArrayList<>();
-        bunThitNuongSteps.add(new Step(1, "Ướp thịt bò với tỏi và gia vị."));
-        bunThitNuongSteps.add(new Step(2, "Nướng thịt bò cho đến khi chín."));
-        bunThitNuongSteps.add(new Step(3, "Luộc bún tươi và xếp lên đĩa."));
-        bunThitNuongSteps.add(new Step(4, "Đặt thịt bò lên bún và trang trí với hành tây thái lát."));
+        bunThitNuongSteps.add(new Step(1, "", "Ướp thịt bò với tỏi và gia vị."));
+        bunThitNuongSteps.add(new Step(2, "", "Nướng thịt bò cho đến khi chín."));
+        bunThitNuongSteps.add(new Step(3, "", "Luộc bún tươi và xếp lên đĩa."));
+        bunThitNuongSteps.add(new Step(4, "", "Đặt thịt bò lên bún và trang trí với hành tây thái lát."));
 
         Map<String, String> bunThitNuongTime = new HashMap<>();
         bunThitNuongTime.put("prep_time", "20 phút");
@@ -84,10 +85,10 @@ public class RecipeRepository {
         xoiGacIngredients.add(new Recipe_Ingredient("JYe5lRUwdpoLDhcCdfzm", 100));    // Dừa
 
         List<Step> xoiGacSteps = new ArrayList<>();
-        xoiGacSteps.add(new Step(1, "Ngâm gạo nếp trong nước qua đêm."));
-        xoiGacSteps.add(new Step(2, "Trộn gạo nếp với thịt gấc đã làm sạch."));
-        xoiGacSteps.add(new Step(3, "Hấp xôi cho đến khi chín."));
-        xoiGacSteps.add(new Step(4, "Rắc dừa nạo lên xôi trước khi ăn."));
+        xoiGacSteps.add(new Step(1, "", "Ngâm gạo nếp trong nước qua đêm."));
+        xoiGacSteps.add(new Step(2, "", "Trộn gạo nếp với thịt gấc đã làm sạch."));
+        xoiGacSteps.add(new Step(3, "", "Hấp xôi cho đến khi chín."));
+        xoiGacSteps.add(new Step(4, "", "Rắc dừa nạo lên xôi trước khi ăn."));
 
         Map<String, String> xoiGacTime = new HashMap<>();
         xoiGacTime.put("prep_time", "10 phút");
@@ -121,9 +122,9 @@ public class RecipeRepository {
         caHoiNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 2));    // Tỏi
 
         List<Step> caHoiNuongSteps = new ArrayList<>();
-        caHoiNuongSteps.add(new Step(1, "Ướp cá hồi với dầu olive và tỏi."));
-        caHoiNuongSteps.add(new Step(2, "Nướng cá hồi cho đến khi chín vàng."));
-        caHoiNuongSteps.add(new Step(3, "Thưởng thức với rau sống và sốt chanh."));
+        caHoiNuongSteps.add(new Step(1, "", "Ướp cá hồi với dầu olive và tỏi."));
+        caHoiNuongSteps.add(new Step(2, "", "Nướng cá hồi cho đến khi chín vàng."));
+        caHoiNuongSteps.add(new Step(3, "", "Thưởng thức với rau sống và sốt chanh."));
 
         Map<String, String> caHoiNuongTime = new HashMap<>();
         caHoiNuongTime.put("prep_time", "15 phút");
@@ -159,10 +160,10 @@ public class RecipeRepository {
         gaRangManIngredients.add(new Recipe_Ingredient("yInk6h0mSvKH2Ouddi5K", 2));     // Nước tương
 
         List<Step> gaRangManSteps = new ArrayList<>();
-        gaRangManSteps.add(new Step(1, "Ướp thịt gà với tỏi và nước tương."));
-        gaRangManSteps.add(new Step(2, "Chiên thịt gà với dầu mè cho đến khi chín vàng."));
-        gaRangManSteps.add(new Step(3, "Thêm hành tây vào và đảo đều cho đến khi hành mềm."));
-        gaRangManSteps.add(new Step(4, "Cho ra đĩa và thưởng thức."));
+        gaRangManSteps.add(new Step(1, "", "Ướp thịt gà với tỏi và nước tương."));
+        gaRangManSteps.add(new Step(2, "", "Chiên thịt gà với dầu mè cho đến khi chín vàng."));
+        gaRangManSteps.add(new Step(3, "", "Thêm hành tây vào và đảo đều cho đến khi hành mềm."));
+        gaRangManSteps.add(new Step(4, "", "Cho ra đĩa và thưởng thức."));
 
         Map<String, String> gaRangManTime = new HashMap<>();
         gaRangManTime.put("prep_time", "20 phút");
@@ -199,10 +200,10 @@ public class RecipeRepository {
         saladTraiCayIngredients.add(new Recipe_Ingredient("oc1gFnq94uI8R4jePmea", 1));    // Mật ong
 
         List<Step> saladTraiCaySteps = new ArrayList<>();
-        saladTraiCaySteps.add(new Step(1, "Gọt vỏ và cắt trái cây thành miếng nhỏ."));
-        saladTraiCaySteps.add(new Step(2, "Trộn tất cả các loại trái cây với nhau."));
-        saladTraiCaySteps.add(new Step(3, "Thêm nước cốt chanh và mật ong vào trộn đều."));
-        saladTraiCaySteps.add(new Step(4, "Để lạnh trước khi thưởng thức."));
+        saladTraiCaySteps.add(new Step(1, "", "Gọt vỏ và cắt trái cây thành miếng nhỏ."));
+        saladTraiCaySteps.add(new Step(2, "", "Trộn tất cả các loại trái cây với nhau."));
+        saladTraiCaySteps.add(new Step(3, "", "Thêm nước cốt chanh và mật ong vào trộn đều."));
+        saladTraiCaySteps.add(new Step(4, "", "Để lạnh trước khi thưởng thức."));
 
         Map<String, String> saladTraiCayTime = new HashMap<>();
         saladTraiCayTime.put("prep_time", "15 phút");
@@ -237,10 +238,10 @@ public class RecipeRepository {
         banhFlanIngredients.add(new Recipe_Ingredient("ompmATag4FVVv13tfCJr", 1));  // Tinh chất vani
 
         List<Step> banhFlanSteps = new ArrayList<>();
-        banhFlanSteps.add(new Step(1, "Đun sữa tươi với đường cho đến khi tan chảy."));
-        banhFlanSteps.add(new Step(2, "Khuấy trứng gà với tinh chất vani."));
-        banhFlanSteps.add(new Step(3, "Trộn sữa và trứng lại với nhau, rồi đổ vào khuôn."));
-        banhFlanSteps.add(new Step(4, "Hấp cách thủy trong khoảng 45 phút cho đến khi bánh chín."));
+        banhFlanSteps.add(new Step(1, "", "Đun sữa tươi với đường cho đến khi tan chảy."));
+        banhFlanSteps.add(new Step(2, "", "Khuấy trứng gà với tinh chất vani."));
+        banhFlanSteps.add(new Step(3, "", "Trộn sữa và trứng lại với nhau, rồi đổ vào khuôn."));
+        banhFlanSteps.add(new Step(4, "", "Hấp cách thủy trong khoảng 45 phút cho đến khi bánh chín."));
 
         Map<String, String> banhFlanTime = new HashMap<>();
         banhFlanTime.put("prep_time", "15 phút");
@@ -329,6 +330,8 @@ public class RecipeRepository {
                                 recipe.setRecipeId(document.getId());
                                 // Convert to recipeDto
                                 RecipeDto recipeDto = convertToDto(recipe);
+                                recipeDto.setIngredients(recipe.getIngredients());
+                                recipeDto.setSteps(recipe.getSteps());
                                 callback.onSuccess(recipeDto);
                                 taskCompletionSource.setResult(null);
                             } else {
@@ -450,39 +453,38 @@ public class RecipeRepository {
                                 recipe.setRecipeId(document.getId());
                                 // Convert to dto
                                 RecipeDto recipeDto = convertToDto(recipe);
-                                recipeDto.setIngredients(recipe.getIngredients());
-                                recipeDto.setSteps(recipe.getSteps());
+//                                recipeDto.setIngredients(recipe.getIngredients());
+//                                recipeDto.setSteps(recipe.getSteps());
 
                                 // Get author by id
-                                UserRepository userRepository = new UserRepository();
-                                Task<Void> taskAuthor = userRepository.findById(recipe.getAuthorId(), new FirestoreCallback<UserDto>() {
-                                    @Override
-                                    public void onSuccess(UserDto result) {
-                                        recipeDto.setAuthor(result);
-                                    }
-                                    @Override
-                                    public void onFailure(Exception e) {
-                                        callback.onFailure(e);
-                                    }
-                                });
-                                tasks.add(taskAuthor);
+//                                UserRepository userRepository = new UserRepository();
+//                                Task<Void> taskAuthor = userRepository.findById(recipe.getAuthorId(), new FirestoreCallback<UserDto>() {
+//                                    @Override
+//                                    public void onSuccess(UserDto result) {
+//                                        recipeDto.setAuthor(result);
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Exception e) {
+//                                        callback.onFailure(e);
+//                                    }
+//                                });
+//                                tasks.add(taskAuthor);
 
                                 // Get category by id
-                                CategoryRepository categoryRepository = new CategoryRepository();
-                                Task<Void> taskCategory = categoryRepository.findById(recipe.getCategoryId(), new FirestoreCallback<CategoryDto>() {
-                                    @Override
-                                    public void onSuccess(CategoryDto categoryDto) {
-                                        recipeDto.setCategory(categoryDto);
-                                    }
-                                    @Override
-                                    public void onFailure(Exception e) {
-                                        callback.onFailure(e);
-                                    }
-                                });
-                                tasks.add(taskCategory);
+//                                CategoryRepository categoryRepository = new CategoryRepository();
+//                                Task<Void> taskCategory = categoryRepository.findById(recipe.getCategoryId(), new FirestoreCallback<CategoryDto>() {
+//                                    @Override
+//                                    public void onSuccess(CategoryDto categoryDto) {
+//                                        recipeDto.setCategory(categoryDto);
+//                                    }
+//                                    @Override
+//                                    public void onFailure(Exception e) {
+//                                        callback.onFailure(e);
+//                                    }
+//                                });
+//                                tasks.add(taskCategory);
 
-                                // Get comments
-                                CommentRepository commentRepository = new CommentRepository();
+                                CommentRepository commentRepository = new CommentRepository();      // Get comments
                                 Task<Void> taskComment = commentRepository.allByRecipeId(recipeDto.getRecipeId(), new FirestoreCallback<List<CommentDto>>() {
                                     @Override
                                     public void onSuccess(List<CommentDto> commentDtos) {
@@ -503,7 +505,7 @@ public class RecipeRepository {
                                         if (allTasks.isSuccessful()) {
                                             // Get rating
                                             int number_of_ratings = 0;      // Tổng số đánh giá
-                                            int totalRating = 0;            // Tổng số điểm đánh giá
+                                            float totalRating = 0;            // Tổng số điểm đánh giá
                                             int countOneStar = 0;
                                             int countTwoStar = 0;
                                             int countThreeStar = 0;
@@ -557,4 +559,78 @@ public class RecipeRepository {
                 });
         return taskCompletionSource.getTask();
     }
+
+    public Task<Void> getIngredientsByRecipeId(String recipeId, FirestoreCallback<List<IngredientDto>> callback) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
+
+        findById(recipeId, new FirestoreCallback<RecipeDto>() {
+            @Override
+            public void onSuccess(RecipeDto recipeDto) {
+                IngredientRepository ingredientRepository = new IngredientRepository();
+                List<IngredientDto> ingredientDtos = new ArrayList<>();
+                List<Task<Void>> tasks = new ArrayList<>();
+
+                // Lặp các nguyên liệu trong công thức (recipe)
+                for (Recipe_Ingredient ingredient : recipeDto.getIngredients()) {
+                    IngredientDto ingredientDto = new IngredientDto();
+                    ingredientDto.setIngredientId(ingredient.getIngredientId());
+                    ingredientDto.setQuantity(ingredient.getQuantity());
+
+                    // Tạo TaskCompletionSource cho từng ingredient
+                    TaskCompletionSource<Void> ingredientTaskSource = new TaskCompletionSource<>();
+
+                    // Get ingredient by id
+                    ingredientRepository.findById(ingredientDto.getIngredientId(), new FirestoreCallback<Ingredient>() {
+                        @Override
+                        public void onSuccess(Ingredient result) {
+                            // Cập nhật thông tin nguyên liệu
+                            ingredientDto.setName(result.getName());
+                            ingredientDto.setCategory(result.getCategory());
+                            ingredientDto.setUnit(result.getUnit());
+
+                            // Thêm vào danh sách nguyên liệu
+                            ingredientDtos.add(ingredientDto);
+
+                            // Đánh dấu hoàn thành task cho ingredient này
+                            ingredientTaskSource.setResult(null);
+                        }
+
+                        @Override
+                        public void onFailure(Exception e) {
+                            // Báo lỗi cho task này
+                            ingredientTaskSource.setException(e);
+                        }
+                    });
+
+                    // Thêm task của từng ingredient vào danh sách task tổng
+                    tasks.add(ingredientTaskSource.getTask());
+                }
+
+                // Đợi tất cả các task hoàn thành
+                Tasks.whenAllComplete(tasks).addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Task<?>>> allTasks) {
+                        if (allTasks.isSuccessful()) {
+                            // Khi tất cả các task đều hoàn thành, trả về danh sách ingredient
+                            callback.onSuccess(ingredientDtos);
+                            taskCompletionSource.setResult(null);
+                        } else {
+                            // Nếu có bất kỳ lỗi nào trong các task, báo lỗi
+                            callback.onFailure(allTasks.getException());
+                            taskCompletionSource.setException(allTasks.getException());
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+                taskCompletionSource.setException(e);
+            }
+        });
+
+        return taskCompletionSource.getTask();
+    }
+
 }

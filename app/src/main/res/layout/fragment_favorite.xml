@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".views.FavoriteFragment">
+
+    <!-- Dòng hiển thị số lượng công thức -->
+    <TextView
+        android:id="@+id/recipeCount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#d2d2d2"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="13sp" />
+
+    <!-- Danh sách công thức nấu ăn -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipeListFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/recipeCount"
+        android:background="@color/background"
+        android:layout_alignParentBottom="true"
+        android:clipToPadding="false"
+        android:padding="8dp" />
+
+</RelativeLayout>

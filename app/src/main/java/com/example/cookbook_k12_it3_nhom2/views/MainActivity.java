@@ -3,6 +3,9 @@ package com.example.cookbook_k12_it3_nhom2.views;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,11 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerViewRecipe;
-    private RecipeAdapter mAdapterRecipe;
-    private List<RecipeDto> mRecipeList;
-
     private SharedPreferences sharedPreferences;
+    private String user_id, username, email, name_display;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,33 +49,51 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
-        mRecyclerViewRecipe = findViewById(R.id.recipeList);
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        // sharedPreferences lấy lưu trữ thông tin người dùng đăng nhập
+        sharedPreferences = getSharedPreferences("UserRefs", MODE_PRIVATE);
+        user_id = sharedPreferences.getString("user_id", null);
+        username = sharedPreferences.getString("username", null);
+        email = sharedPreferences.getString("email", null);
+        name_display = sharedPreferences.getString("name_display", null);
 
-        // Hiển thị 2 recipe trên 1 hàng
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerViewRecipe.setLayoutManager(gridLayoutManager);
-
-        showRecipes();      // Hiển thị danh sách recipe khi chạy chương trình
+        // Set default fragment
+        loadFragment(new HomeFragment());
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            Fragment fragment;
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 // Xử lý cho home
-                showRecipes();
+                fragment = new HomeFragment();
+                loadFragment(fragment);
                 return true;
             } else if (id == R.id.nav_favourites) {
                 // Xử lý cho Favourites
+                fragment = new FavoriteFragment(user_id);
+                loadFragment(fragment);
                 return true;
             } else if (id == R.id.nav_menu) {
                 // Xử lý cho menu
+                fragment = new CategoryFragment();
+                loadFragment(fragment);
                 return true;
             } else if (id == R.id.nav_profile) {
                 // Xử lý cho profile
+                fragment = new ProfileFragment();
+                loadFragment(fragment);
                 return true;
             }
             return false;
+        });
+
+        // Click logo quay về trang chủ
+        ImageView logoIcon = findViewById(R.id.logoIcon);
+        logoIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomNavigationView.setSelectedItemId(R.id.nav_home);
+            }
         });
 
 //        searchRecipeByTitle("Bún Thịt Nướng");
@@ -99,6 +119,14 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
+    }
+
+    private void loadFragment(Fragment fragment) {
+        // load fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     public void register(String username, String password) {
@@ -146,23 +174,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void getAllCategories() {
-        CategoryController controller = new CategoryController();
-        controller.getAllCategories(new FirestoreCallback<List<CategoryDto>>() {
-            @Override
-            public void onSuccess(List<CategoryDto> categories) {
-                for (CategoryDto categoryDto : categories) {
-                    Log.i("getAllCategories: category_" + categoryDto.getCategoryId(), categoryDto.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("getAllCategories: error", e.toString());
-            }
-        });
-    }
-
     public void getCategoryDetail(String categoryId) {
         CategoryController controller = new CategoryController();
         controller.getCategoryDetail(categoryId, new FirestoreCallback<CategoryDto>() {
@@ -204,32 +215,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 Log.w("getProfile: error", e.getMessage());
-            }
-        });
-    }
-
-    // Hiển thị danh sách recipe trong trang chủ
-    public void showRecipes() {
-        RecipeController recipeController = new RecipeController();
-        recipeController.getRecipes(new FirestoreCallback<List<RecipeDto>>() {
-            @Override
-            public void onSuccess(List<RecipeDto> result) {
-                mRecipeList = new ArrayList<>();
-                mRecipeList = result;
-                // Set adapter hiển thị item
-                mAdapterRecipe = new RecipeAdapter(MainActivity.this, mRecipeList);
-                mRecyclerViewRecipe.setAdapter(mAdapterRecipe);
-                // Hiển thị text recipeCount
-                TextView recipeCount = findViewById(R.id.recipeCount);
-                recipeCount.setText("Hiển thị " + result.size() + " / " + result.size() + " công thức");
-//                for (RecipeDto recipe : result) {
-//                    Log.i("getRecipes: recipe_" + recipe.getRecipeId(), recipe.toString());
-//                }
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Log.w("getRecipes: Error", e.toString());
-                Toast.makeText(MainActivity.this, "Lỗi khi hiển thị danh sách công thức nấu ăn", Toast.LENGTH_LONG).show();
             }
         });
     }

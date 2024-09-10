@@ -1,7 +1,9 @@
 package com.example.cookbook_k12_it3_nhom2.controllers;
 
+import com.example.cookbook_k12_it3_nhom2.repositories.FavoriteRepository;
 import com.example.cookbook_k12_it3_nhom2.repositories.RecipeRepository;
 import com.example.cookbook_k12_it3_nhom2.repositories.UserRepository;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.FavoriteDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.UserDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
@@ -11,10 +13,12 @@ import java.util.List;
 public class UserController {
     private final UserRepository repository;
     private final RecipeRepository recipeRepository;
+    private final FavoriteRepository favoriteRepository;
 
     public UserController() {
         this.repository = new UserRepository();
         this.recipeRepository = new RecipeRepository();
+        this.favoriteRepository = new FavoriteRepository();
     }
 
     public void login(String username, String password, FirestoreCallback<UserDto> callback) {
@@ -50,6 +54,19 @@ public class UserController {
                 callback.onSuccess(result);
             }
 
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getFavouritesRecipe(String userId, FirestoreCallback<List<FavoriteDto>> callback) {
+        favoriteRepository.allByUserId(userId, new FirestoreCallback<List<FavoriteDto>>() {
+            @Override
+            public void onSuccess(List<FavoriteDto> result) {
+                callback.onSuccess(result);
+            }
             @Override
             public void onFailure(Exception e) {
                 callback.onFailure(e);

@@ -85,6 +85,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="#0A0D24"
+                android:textColor="@color/white"
                 android:text="New account" />
 
             <Button
@@ -94,6 +95,7 @@
                 android:layout_margin="4dp"
                 android:layout_weight="1"
                 android:backgroundTint="#0B1B32"
+                android:textColor="@color/white"
                 android:text="Sign in" />
         </LinearLayout>
 

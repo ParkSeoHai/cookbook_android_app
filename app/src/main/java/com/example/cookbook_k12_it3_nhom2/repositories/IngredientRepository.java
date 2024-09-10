@@ -2,8 +2,22 @@ package com.example.cookbook_k12_it3_nhom2.repositories;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.example.cookbook_k12_it3_nhom2.models.Comment;
 import com.example.cookbook_k12_it3_nhom2.models.Ingredient;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CategoryDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CommentDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.IngredientDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.UserDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,5 +135,31 @@ public class IngredientRepository {
                         Log.e("error", e.getMessage().toString());
                     });
         }
+    }
+
+    public Task<Void> findById(String ingredientId, FirestoreCallback<Ingredient> callback) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
+        db.collection("ingredients").document(ingredientId).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null && document.exists()) {
+                                // Get ingredient
+                                Ingredient ingredient = document.toObject(Ingredient.class);
+                                callback.onSuccess(ingredient);
+                                taskCompletionSource.setResult(null);
+                            } else {
+                                Exception e = new Exception("Ingredient not found");
+                                callback.onFailure(e);
+                                taskCompletionSource.setException(e);
+                                BugLogRepository.logErrorToDatabase(e, "Method findById Ingredient with id = " + ingredientId);
+                            }
+                        }
+                    }
+                });
+
+        return taskCompletionSource.getTask();
     }
 }

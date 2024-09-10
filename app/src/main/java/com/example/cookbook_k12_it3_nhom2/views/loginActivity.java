@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class loginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +79,7 @@ public class loginActivity extends AppCompatActivity {
                 // Lưu thông tin người dùng khi đăng nhập thành công
                 sharedPreferences = getSharedPreferences("UserRefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("user_id", userDto.getUserId());
                 editor.putString("username", userDto.getUsername());
                 editor.putString("email", userDto.getEmail());
                 editor.putString("name_display", userDto.getName_display());

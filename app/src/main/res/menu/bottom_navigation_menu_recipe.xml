@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_about"
+        android:icon="@drawable/baseline_recipe_about_24"
+        android:title="Tổng quan" />
+    <item
+        android:id="@+id/nav_ingredients"
+        android:icon="@drawable/baseline_recipe_ingredient_24"
+        android:title="Nguyên liệu" />
+    <item
+        android:id="@+id/nav_instructions"
+        android:icon="@drawable/baseline_recipe_instruction_24"
+        android:title="Thực hiện" />
+</menu>

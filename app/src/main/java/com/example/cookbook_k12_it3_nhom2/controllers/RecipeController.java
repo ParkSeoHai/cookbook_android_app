@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.example.cookbook_k12_it3_nhom2.models.Recipe;
 import com.example.cookbook_k12_it3_nhom2.repositories.RecipeRepository;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.IngredientDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +55,19 @@ public class RecipeController {
         recipeRepository.detail(recipeId, new FirestoreCallback<RecipeDto>() {
             @Override
             public void onSuccess(RecipeDto result) {
+                callback.onSuccess(result);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void getIngredientsByRecipeId(String recipeId, FirestoreCallback<List<IngredientDto>> callback) {
+        recipeRepository.getIngredientsByRecipeId(recipeId, new FirestoreCallback<List<IngredientDto>>() {
+            @Override
+            public void onSuccess(List<IngredientDto> result) {
                 callback.onSuccess(result);
             }
             @Override

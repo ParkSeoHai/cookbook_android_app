@@ -8,7 +8,7 @@
 
     <!-- Header: Tên app và các biểu tượng -->
     <LinearLayout
-        android:id="@+id/header"
+        android:id="@+id/header_recipe_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background"
@@ -19,14 +19,14 @@
         android:paddingRight="16dp"
         android:paddingBottom="8dp">
 
-        <!-- Biểu tượng trang chủ -->
+        <!-- Biểu tượng back -->
         <ImageView
-            android:id="@+id/logoIcon"
+            android:id="@+id/backIcon"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginLeft="10dp"
             android:textAlignment="center"
-            android:src="@drawable/baseline_home_24"
+            android:src="@drawable/baseline_arrow_back_ios_24"
             app:tint="@android:color/white" />
 
         <!-- Tên app -->
@@ -41,7 +41,7 @@
             android:textColor="@android:color/white"
             android:textSize="24sp" />
 
-        <!-- Biểu tượng tìm kiếm -->
+        <!-- Biểu tượng more -->
         <ImageView
             android:id="@+id/searchIcon"
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:textAlignment="center"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/baseline_more_vert_24"
             app:tint="@android:color/white" />
 
     </LinearLayout>
@@ -60,44 +60,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottomNavigation"
-        android:layout_below="@id/header"
+        android:layout_below="@id/header_recipe_detail"
+        android:background="@color/background"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <!-- Thanh tìm kiếm -->
-<!--    <EditText-->
-<!--        android:id="@+id/searchBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/header"-->
-<!--        android:background="@drawable/border_top"-->
-<!--        android:hint="Tìm kiếm công thức..."-->
-<!--        android:padding="10dp"-->
-<!--        android:textSize="14sp"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        android:textColorHint="@color/white" />-->
-
-    <!-- Dòng hiển thị số lượng công thức -->
-<!--    <TextView-->
-<!--        android:id="@+id/recipeCount"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/searchBar"-->
-<!--        android:background="#d2d2d2"-->
-<!--        android:padding="5dp"-->
-<!--        android:textAlignment="center"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:textSize="13sp" />-->
-
-    <!-- Danh sách công thức nấu ăn -->
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/recipeList"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_above="@id/bottomNavigation"-->
-<!--        android:layout_below="@id/recipeCount"-->
-<!--        android:background="@color/background"-->
-<!--        android:clipToPadding="false"-->
-<!--        android:padding="8dp" />-->
 
     <!-- Thanh điều hướng dưới cùng -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -108,6 +73,6 @@
         android:background="@drawable/border_top"
         app:itemIconTint="@color/white"
         app:itemTextColor="@color/white"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu_recipe" />
 
 </RelativeLayout>
