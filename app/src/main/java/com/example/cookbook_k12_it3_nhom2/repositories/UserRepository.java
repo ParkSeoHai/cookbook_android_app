@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.cookbook_k12_it3_nhom2.models.Favorite;
 import com.example.cookbook_k12_it3_nhom2.models.User;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CommentDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.FavoriteDto;
@@ -12,6 +13,7 @@ import com.example.cookbook_k12_it3_nhom2.repositories.dtos.UserDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
@@ -225,6 +227,95 @@ public class UserRepository {
                             callback.onFailure(task.getException());
                         }
                     }
+                });
+    }
+
+    public void checkRecipeInFavorite(String recipeId, String userId, FirestoreCallback<Boolean> callback) {
+        db.collection("favorites")
+                .whereEqualTo("recipeId", recipeId)
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                // Công thức nấu ăn đã nằm trong danh sách yêu thích
+                                callback.onSuccess(true);
+                            } else {
+                                // Công thức nấu ăn không nằm trong danh sách yêu thích
+                                callback.onSuccess(false);
+                            }
+                        } else {
+                            // Trường hợp không thành công trong quá trình truy vấn (ví dụ: lỗi kết nối)
+                            callback.onFailure(task.getException());
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Xử lý lỗi nếu truy vấn thất bại hoàn toàn
+                        callback.onFailure(e);
+                    }
+                });
+    }
+
+    public void addRecipeToFavorite(Favorite favorite, FirestoreCallback<Boolean> callback) {
+        db.collection("favorites")
+                .add(favorite)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        callback.onSuccess(true);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    callback.onFailure(new Exception("Register failed " + e.getMessage()));
+                });
+    }
+
+    public void removeRecipeInFavorite(String recipeId, String userId, FirestoreCallback<Boolean> callback) {
+        db.collection("favorites")
+                .whereEqualTo("recipeId", recipeId)
+                .whereEqualTo("userId", userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                                // Lặp qua các tài liệu và xóa tài liệu
+                                List<DocumentSnapshot> documentSnapshots = querySnapshot.getDocuments();
+                                for (DocumentSnapshot documentSnapshot : documentSnapshots) {
+                                    DocumentReference docRef = documentSnapshot.getReference();
+                                    docRef.delete()
+                                            .addOnSuccessListener(aVoid -> {
+                                                // Xóa thành công
+                                                callback.onSuccess(true);
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                // Xóa thất bại
+                                                callback.onSuccess(false);
+                                                callback.onFailure(e);
+                                            });
+                                    break;
+                                }
+                            } else {
+                                // Không tìm thấy tài liệu nào để xóa
+                                Log.i("error removeRecipeInFavorite", "No documents found with recipeId: " + recipeId);
+                                callback.onSuccess(false); // No documents to remove
+                            }
+                        } else {
+                            // Trường hợp không thành công trong quá trình truy vấn (ví dụ: lỗi kết nối)
+                            callback.onFailure(task.getException());
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Xử lý lỗi nếu truy vấn thất bại
+                    callback.onFailure(e);
                 });
     }
 
