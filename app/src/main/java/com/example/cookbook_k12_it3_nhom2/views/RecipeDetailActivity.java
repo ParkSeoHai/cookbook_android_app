@@ -1,10 +1,19 @@
 package com.example.cookbook_k12_it3_nhom2.views;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,10 +24,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cookbook_k12_it3_nhom2.R;
+import com.example.cookbook_k12_it3_nhom2.controllers.UserController;
+import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RecipeDetailActivity extends AppCompatActivity {
-    private String recipeId;
+    private SharedPreferences sharedPreferences;
+    private UserController userController;
+    private String recipeId, userId;
+    private Boolean recipeIsFavorite = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +41,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_detail);
 
         Intent intent = getIntent();
+        // Get recipe id từ itent
         recipeId = intent.getStringExtra("recipeId");
 
-        Log.i("recipe id" , recipeId);
+        // sharedPreferences lấy lưu trữ thông tin người dùng đăng nhập
+        sharedPreferences = getSharedPreferences("UserRefs", MODE_PRIVATE);
+        userId = sharedPreferences.getString("user_id", null);
+
+        userController = new UserController();
 
         loadFragment(new RecipeAboutFragment(recipeId));    // Default fragment
 
@@ -61,6 +80,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
         backIcon.setOnClickListener(v -> {
             finish();
         });
+
+        // Kiểm tra recipe hiện tại có trong danh sách yêu thích hay không
+        checkRecipeInFavorite(recipeId, userId);
+
+        ImageView moreIcon = (ImageView) findViewById(R.id.moreIcon);
+        moreIcon.setOnClickListener(v -> {
+            showPopupMenu(v);
+        });
     }
 
     private void loadFragment(Fragment fragment) {
@@ -69,5 +96,127 @@ public class RecipeDetailActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void showPopupMenu(View view) {
+        // Tạo PopupMenu
+        PopupMenu popup = new PopupMenu(RecipeDetailActivity.this, view);
+        popup.getMenuInflater().inflate(R.menu.popup_menu_recipe, popup.getMenu());
+
+        // Nếu recipe có trong danh sách yêu thích của người dùng đang đăng nhập thì thay đổi title
+        if (recipeIsFavorite) {
+            popup.getMenu().findItem(R.id.action_favorite).setTitle("Xóa khỏi yêu thích");
+        } else {
+            popup.getMenu().findItem(R.id.action_favorite).setTitle("Thêm vào yêu thích");
+        }
+
+        // Bắt sự kiện khi một mục trong menu được chọn
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.action_favorite) {
+                    // Xử lý logic thêm/xóa yêu thích
+                    if (recipeIsFavorite) {
+                        removeRecipeInFavorite(view, recipeId, userId);
+                    } else
+                        addRecipeToFavorite(view, recipeId, userId);
+
+                    return true;
+                } else if (item.getItemId() == R.id.action_rate) {
+                    // Xử lý logic đánh giá tại đây
+                    showRatingDialog();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        // Hiển thị PopupMenu
+        popup.show();
+    }
+
+    private void showRatingDialog() {
+        // Tạo và cấu hình Dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_rating);
+
+        TextView dialogTitle = dialog.findViewById(R.id.dialogTitle);
+        RatingBar ratingBar = dialog.findViewById(R.id.ratingBar);
+        EditText ratingContent = dialog.findViewById(R.id.ratingContent);
+        Button submitRating = dialog.findViewById(R.id.submitRating);
+
+        // Thiết lập tiêu đề cho Dialog
+        dialogTitle.setText("Đánh giá công thức");
+
+        submitRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float rating = ratingBar.getRating();
+                String content = ratingContent.getText().toString();
+
+                // Xử lý dữ liệu đánh giá, thêm dữ liệu vào database
+                Log.i("value rating", content + " / " + rating);
+
+                dialog.dismiss();   // Đóng Dialog sau khi gửi đánh giá
+            }
+        });
+
+        dialog.show(); // Hiển thị Dialog
+    }
+
+    public void checkRecipeInFavorite(String recipeId, String userId) {
+        userController.checkRecipeInFavorite(recipeId, userId, new FirestoreCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                // Gán dữ liệu true nếu có, ngược lại false
+                recipeIsFavorite = result;
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.i("Error checkRecipeInFavorite", e.toString());
+            }
+        });
+    }
+
+    public void addRecipeToFavorite(View view, String recipeId, String userId) {
+        userController.addRecipeToFavorite(recipeId, userId, new FirestoreCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (result) {
+                    Toast.makeText(RecipeDetailActivity.this, "Thêm công thức vào yêu thích thành công", Toast.LENGTH_SHORT).show();
+                    // Xét recipe tồn tại trong favorite
+                    recipeIsFavorite = true;
+                    showPopupMenu(view);
+                } else {
+                    Toast.makeText(RecipeDetailActivity.this, "Thêm công thức vào yêu thích thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.i("Error addRecipeToFavorite", e.toString());
+                Toast.makeText(RecipeDetailActivity.this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void removeRecipeInFavorite(View view, String recipeId, String userId) {
+        userController.removeRecipeInFavorite(recipeId, userId, new FirestoreCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (result) {
+                    Toast.makeText(RecipeDetailActivity.this, "Xóa công thức khỏi yêu thích thành công", Toast.LENGTH_SHORT).show();
+                    // Xét recipe không tồn tại trong favorite
+                    recipeIsFavorite = false;
+                    showPopupMenu(view);
+                } else {
+                    Toast.makeText(RecipeDetailActivity.this, "Xóa công thức khỏi yêu thích thất bại", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.i("Error removeRecipeInFavorite", e.toString());
+                Toast.makeText(RecipeDetailActivity.this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
