@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         name_display = sharedPreferences.getString("name_display", null);
 
         // Set default fragment
-        loadFragment(new HomeFragment());
+        loadFragment(new HomeFragment(null, null));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
                 // Xử lý cho home
-                fragment = new HomeFragment();
+                fragment = new HomeFragment(null, null);
                 loadFragment(fragment);
                 return true;
             } else if (id == R.id.nav_favourites) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (id == R.id.nav_menu) {
                 // Xử lý cho menu
-                fragment = new CategoryFragment();
+                fragment = new CategoryFragment(getSupportFragmentManager());
                 loadFragment(fragment);
                 return true;
             } else if (id == R.id.nav_profile) {
