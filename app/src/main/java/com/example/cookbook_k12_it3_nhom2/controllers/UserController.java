@@ -1,5 +1,6 @@
 package com.example.cookbook_k12_it3_nhom2.controllers;
 
+import com.example.cookbook_k12_it3_nhom2.models.Comment;
 import com.example.cookbook_k12_it3_nhom2.models.Favorite;
 import com.example.cookbook_k12_it3_nhom2.repositories.FavoriteRepository;
 import com.example.cookbook_k12_it3_nhom2.repositories.RecipeRepository;
@@ -126,8 +127,6 @@ public class UserController {
 
         // Lấy ngày và giờ hiện tại
         Date now = new Date();
-        System.out.println("Current date and time: " + now);
-
         // Định dạng ngày giờ
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String formattedNow = formatter.format(now);
@@ -148,6 +147,33 @@ public class UserController {
 
     public void removeRecipeInFavorite(String recipeId, String userId, FirestoreCallback<Boolean> callback) {
         repository.removeRecipeInFavorite(recipeId, userId, new FirestoreCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                callback.onSuccess(result);
+            }
+            @Override
+            public void onFailure(Exception e) {
+                callback.onFailure(e);
+            }
+        });
+    }
+
+    public void addComment(String recipeId, String userId, String content, int rating, FirestoreCallback<Boolean> callback) {
+        Comment comment = new Comment();
+        comment.setRecipeId(recipeId);
+        comment.setUserId(userId);
+        comment.setContent(content);
+        comment.setRating(rating);
+
+        // Lấy ngày và giờ hiện tại
+        Date now = new Date();
+        // Định dạng ngày giờ
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedNow = formatter.format(now);
+
+        comment.setCreatedAt(formattedNow);
+
+        repository.addComment(comment, new FirestoreCallback<Boolean>() {
             @Override
             public void onSuccess(Boolean result) {
                 callback.onSuccess(result);

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.cookbook_k12_it3_nhom2.R;
@@ -129,6 +130,7 @@ public class RecipeAboutFragment extends Fragment {
             @Override
             public void onFailure(Exception e) {
                 Log.e("getRecipeDetail: error", e.toString());
+                Toast.makeText(getContext(), "Error: " + e.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

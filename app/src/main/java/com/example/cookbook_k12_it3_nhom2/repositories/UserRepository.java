@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.cookbook_k12_it3_nhom2.models.Comment;
 import com.example.cookbook_k12_it3_nhom2.models.Favorite;
 import com.example.cookbook_k12_it3_nhom2.models.User;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CommentDto;
@@ -271,7 +272,7 @@ public class UserRepository {
                     }
                 })
                 .addOnFailureListener(e -> {
-                    callback.onFailure(new Exception("Register failed " + e.getMessage()));
+                    callback.onFailure(new Exception("Thêm công thức vào danh sách yêu thích thất bại " + e.getMessage()));
                 });
     }
 
@@ -319,9 +320,42 @@ public class UserRepository {
                 });
     }
 
-    public void addComment() {}
+    public void addComment(Comment comment, FirestoreCallback<Boolean> callback) {
+        // Kiểm tra comment tồn tại chưa, mỗi user chỉ comment 1 lần / recipe
+        db.collection("comments")
+                .whereEqualTo("recipeId", comment.getRecipeId())
+                .whereEqualTo("userId", comment.getUserId())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            boolean isExits = false;
+                            for (DocumentSnapshot document : task.getResult()) {
+                                User user = document.toObject(User.class);
+                                if (user != null) {
+                                    isExits = true;
+                                }
+                                break;
+                            }
+                            if (!isExits) {
+                                db.collection("comments")
+                                        .add(comment)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                callback.onSuccess(true);
+                                            }
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            callback.onFailure(new Exception("Thêm đánh giá thất bại: " + e.getMessage()));
+                                        });
+                            } else {
+                                callback.onFailure(new Exception("Bạn đã có đánh giá cho công thức này"));
+                            }
+                        }
+                    }
+                });
+    }
 
-    public void updateComment() {}
-
-    public void deleteComment() {}
 }
