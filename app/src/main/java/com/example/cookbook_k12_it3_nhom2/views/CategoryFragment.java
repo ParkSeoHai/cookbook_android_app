@@ -3,6 +3,7 @@ package com.example.cookbook_k12_it3_nhom2.views;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class CategoryFragment extends Fragment {
+    private FragmentManager fragmentManager;
     GridView gridView;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -34,8 +36,9 @@ public class CategoryFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public CategoryFragment() {
+    public CategoryFragment(FragmentManager fragmentManager) {
         // Required empty public constructor
+        this.fragmentManager = fragmentManager;
     }
 
     /**
@@ -47,8 +50,8 @@ public class CategoryFragment extends Fragment {
      * @return A new instance of fragment CategoryFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CategoryFragment newInstance(String param1, String param2) {
-        CategoryFragment fragment = new CategoryFragment();
+    public CategoryFragment newInstance(String param1, String param2) {
+        CategoryFragment fragment = new CategoryFragment(fragmentManager);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,7 +85,7 @@ public class CategoryFragment extends Fragment {
             public void onSuccess(List<CategoryDto> categories) {
                 gridView = view.findViewById(R.id.gridViewCategory);
                 // Sử dụng custom adapter để hiển thị danh mục món ăn
-                CategoryAdapter categoryAdapter = new CategoryAdapter(requireContext(), categories);
+                CategoryAdapter categoryAdapter = new CategoryAdapter(requireContext(), categories, fragmentManager);
                 gridView.setAdapter(categoryAdapter);
             }
 

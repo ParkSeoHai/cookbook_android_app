@@ -14,7 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cookbook_k12_it3_nhom2.R;
+import com.example.cookbook_k12_it3_nhom2.controllers.CategoryController;
 import com.example.cookbook_k12_it3_nhom2.controllers.RecipeController;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CategoryDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
 
@@ -27,6 +29,8 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+    private String categoryId, categoryName;
+
     private RecyclerView mRecyclerViewRecipe;
     private RecipeAdapter mAdapterRecipe;
     private List<RecipeDto> mRecipeList;
@@ -40,8 +44,10 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public HomeFragment() {
+    public HomeFragment(String categoryId, String categoryName) {
         // Required empty public constructor
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     /**
@@ -53,8 +59,8 @@ public class HomeFragment extends Fragment {
      * @return A new instance of fragment HomeFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
+    public HomeFragment newInstance(String param1, String param2) {
+        HomeFragment fragment = new HomeFragment(categoryId, categoryName);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -81,7 +87,12 @@ public class HomeFragment extends Fragment {
         // Hiển thị 2 recipe trên 1 hàng
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         mRecyclerViewRecipe.setLayoutManager(gridLayoutManager);
-        showRecipes(view);
+
+        if (categoryId != null) {
+            showRecipesOfCategory(view);
+        } else {
+            showRecipes(view);
+        }
 
         return view;
     }
@@ -100,14 +111,34 @@ public class HomeFragment extends Fragment {
                 // Hiển thị text recipeCount
                 TextView recipeCount = view.findViewById(R.id.recipeCount);
                 recipeCount.setText("Hiển thị " + result.size() + " / " + result.size() + " công thức");
-//                for (RecipeDto recipe : result) {
-//                    Log.i("getRecipes: recipe_" + recipe.getRecipeId(), recipe.toString());
-//                }
             }
             @Override
             public void onFailure(Exception e) {
                 Log.w("getRecipes: Error", e.toString());
-                Toast.makeText(requireContext(), "Lỗi khi hiển thị danh sách công thức nấu ăn", Toast.LENGTH_LONG).show();
+                Toast.makeText(requireContext(), "Lỗi khi hiển thị danh sách công thức", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    // Hiển thị danh sách recipes by category
+    public void showRecipesOfCategory(View view) {
+        CategoryController controller = new CategoryController();
+        controller.getCategoryDetail(categoryId, new FirestoreCallback<CategoryDto>() {
+            @Override
+            public void onSuccess(CategoryDto result) {
+                mRecipeList = new ArrayList<>();
+                mRecipeList = result.getRecipeDtos();
+                // Set adapter hiển thị item
+                mAdapterRecipe = new RecipeAdapter(requireContext(), mRecipeList);
+                mRecyclerViewRecipe.setAdapter(mAdapterRecipe);
+                // Hiển thị text recipeCount
+                TextView recipeCount = view.findViewById(R.id.recipeCount);
+                recipeCount.setText("Danh mục: " + categoryName + "\n" + "Hiển thị " + result.getRecipeDtos().size() + " / " + result.getRecipeDtos().size() + " công thức");
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Log.w("getRecipes: Error", e.toString());
+                Toast.makeText(requireContext(), "Lỗi khi hiển thị danh sách công thức", Toast.LENGTH_LONG).show();
             }
         });
     }
