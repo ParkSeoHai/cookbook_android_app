@@ -22,11 +22,18 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookbook_k12_it3_nhom2.R;
+import com.example.cookbook_k12_it3_nhom2.controllers.RecipeController;
 import com.example.cookbook_k12_it3_nhom2.controllers.UserController;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CommentDto;
+import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
@@ -155,7 +162,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 String content = ratingContent.getText().toString();
 
                 // Xử lý dữ liệu đánh giá, thêm dữ liệu vào database
-                Log.i("value rating", content + " / " + rating);
+                addComment(v, recipeId, userId, content, (int) rating);
 
                 dialog.dismiss();   // Đóng Dialog sau khi gửi đánh giá
             }
@@ -216,6 +223,23 @@ public class RecipeDetailActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
                 Log.i("Error removeRecipeInFavorite", e.toString());
                 Toast.makeText(RecipeDetailActivity.this, "Đã xảy ra lỗi", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void addComment(View view, String recipeId, String userId, String content, int rating) {
+        userController.addComment(recipeId, userId, content, rating, new FirestoreCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                if (result) {
+                    Toast.makeText(RecipeDetailActivity.this, "Gửi đánh giá cho công thức này thành công", Toast.LENGTH_LONG).show();
+                    // Refresh fragment about recipe
+                    loadFragment(new RecipeAboutFragment(recipeId));
+                }
+            }
+            @Override
+            public void onFailure(Exception e) {
+                Toast.makeText(RecipeDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
