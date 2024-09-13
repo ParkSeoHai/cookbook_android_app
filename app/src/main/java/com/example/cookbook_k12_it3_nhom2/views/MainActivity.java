@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -91,29 +93,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        searchRecipeByTitle("Bún Thịt Nướng");
-//        getRecipeDetail("C3gIrwbppYZBYqMHNFbQ");
-//        getAllCategories();
-//        getCategoryDetail("GW2H6A2DdrFm1CgAyLfO");
-//        getUserById("9vQ00cgYviaraZuulQiT");
-//        getProfile("9vQ00cgYviaraZuulQiT");
-//        getRecipes();
-//        getRecipeById("VOOCQqhn21Dx4zL7O9OX");
-
-//        Button btn = (Button) findViewById(R.id.button);
-//        btn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    String username = sharedPreferences.getString("username", "empty");
-//                    String email = sharedPreferences.getString("email", "empty");
-//                    String name_display = sharedPreferences.getString("name_display", "empty");
-//                    Toast.makeText(MainActivity.this, username + email + name_display, Toast.LENGTH_LONG).show();
-//                } catch (Exception e) {
-//                    Log.i("error sharedPreferences", e.getMessage());
-//                }
-//            }
-//        });
+        // Click icon search -> focus edit text search
+        ImageView searchIcon = findViewById(R.id.searchIcon);
+        searchIcon.setOnClickListener(v -> {
+            HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
+            fragment.focusEditSearch();
+        });
     }
 
     private void loadFragment(Fragment fragment) {
@@ -122,35 +107,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.replace(R.id.frame_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-    }
-
-    public void register(String username, String password) {
-        UserController controller = new UserController();
-        controller.register(username, password, new FirestoreCallback<Boolean>() {
-            @Override
-            public void onSuccess(Boolean result) {
-                Log.i("register", "Register success");
-            }
-            @Override
-            public void onFailure(Exception e) {
-                Log.i("register error", e.toString());
-            }
-        });
-    }
-
-    public void getRecipeDetail(String recipeId) {
-        RecipeController controller = new RecipeController();
-        controller.getDetail(recipeId, new FirestoreCallback<RecipeDto>() {
-            @Override
-            public void onSuccess(RecipeDto recipe) {
-                Log.i("getRecipeDetail: detail_" + recipeId, recipe.toString());
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.e("getRecipeDetail: error", e.toString());
-            }
-        });
     }
 
     public void searchRecipeByTitle(String title) {
@@ -165,66 +121,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 Log.e("error", e.toString());
-            }
-        });
-    }
-
-    public void getCategoryDetail(String categoryId) {
-        CategoryController controller = new CategoryController();
-        controller.getCategoryDetail(categoryId, new FirestoreCallback<CategoryDto>() {
-            @Override
-            public void onSuccess(CategoryDto result) {
-                Log.i("getCategoryDetail: category_" + categoryId, result.toString());
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.i("getCategoryDetail: error", e.toString());
-            }
-        });
-    }
-
-    public void getUserById(String userId) {
-        UserController userController = new UserController();
-        userController.getUserById(userId, new FirestoreCallback<UserDto>() {
-            @Override
-            public void onSuccess(UserDto result) {
-                Log.i("getUserById: user by id", result.toString());
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.i("getUserById: error", e.toString());
-            }
-        });
-    }
-
-    public void getProfile(String userId) {
-        UserController userController = new UserController();
-        userController.getProfile(userId, new FirestoreCallback<UserDto>() {
-            @Override
-            public void onSuccess(UserDto userDto) {
-                Log.i("getProfile: user_" + userId, userDto.toString());
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.w("getProfile: error", e.getMessage());
-            }
-        });
-    }
-
-    public void getRecipeById(String recipeId) {
-        RecipeController recipeController = new RecipeController();
-        recipeController.getRecipeById(recipeId, new FirestoreCallback<RecipeDto>() {
-            @Override
-            public void onSuccess(RecipeDto result) {
-                Log.i("getRecipeById: recipe_" + result.getRecipeId(), result.toString());
-            }
-
-            @Override
-            public void onFailure(Exception e) {
-                Log.w("getRecipeById: error", e.toString());
             }
         });
     }
