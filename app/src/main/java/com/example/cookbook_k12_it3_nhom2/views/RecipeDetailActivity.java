@@ -162,9 +162,15 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 String content = ratingContent.getText().toString();
 
                 // Xử lý dữ liệu đánh giá, thêm dữ liệu vào database
-                addComment(v, recipeId, userId, content, (int) rating);
-
-                dialog.dismiss();   // Đóng Dialog sau khi gửi đánh giá
+                if(rating > 0) {
+                    if(content.trim().isBlank()) {
+                        content = "Người dùng không để lại bình luận";
+                    }
+                    addComment(v, recipeId, userId, content, (int) rating);
+                    dialog.dismiss();   // Đóng Dialog sau khi gửi đánh giá
+                } else {
+                    Toast.makeText(RecipeDetailActivity.this, "Vui lòng chọn số sao đánh giá", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
