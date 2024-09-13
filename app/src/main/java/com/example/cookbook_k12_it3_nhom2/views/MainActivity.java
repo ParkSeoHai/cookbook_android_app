@@ -43,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
 
         // sharedPreferences lấy lưu trữ thông tin người dùng đăng nhập
         sharedPreferences = getSharedPreferences("UserRefs", MODE_PRIVATE);
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (id == R.id.nav_profile) {
                 // Xử lý cho profile
-                fragment = new ProfileFragment();
+                fragment = new ProfileFragment(user_id, sharedPreferences);
                 loadFragment(fragment);
                 return true;
             }

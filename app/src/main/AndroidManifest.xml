@@ -26,13 +26,13 @@
         </activity>
         <activity
             android:name=".views.MainActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".views.loginActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".views.registerActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
     </application>
 
 </manifest>
