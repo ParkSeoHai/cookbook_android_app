@@ -83,6 +83,7 @@ public class loginActivity extends AppCompatActivity {
                 editor.putString("username", userDto.getUsername());
                 editor.putString("email", userDto.getEmail());
                 editor.putString("name_display", userDto.getName_display());
+                editor.putString("profile_picture", userDto.getProfile_picture());
                 editor.apply();
                 Log.i("Login", "Login success");
                 Toast.makeText(loginActivity.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();

@@ -14,10 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.cookbook_k12_it3_nhom2.R;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 
 import java.util.List;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
@@ -48,7 +51,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         // Sử dụng glide load ảnh từ url
         Glide.with(mContext)
                 .load(recipe.getImageUrl())
-//                .apply(options)
                 .placeholder(R.drawable.image_placeholder)  // Hình ảnh tạm trong khi chờ tải
                 .error(R.drawable.image_placeholder)        // Hình ảnh hiển thị khi có lỗi
                 .into(holder.recipeImage);
