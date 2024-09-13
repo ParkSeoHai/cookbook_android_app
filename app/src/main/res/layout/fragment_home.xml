@@ -15,7 +15,7 @@
             android:padding="10dp"
             android:textSize="14sp"
             android:textColor="@android:color/white"
-            android:textColorHint="@color/white" />
+            android:textColorHint="@color/white"/>
 
     <!-- Dòng hiển thị số lượng công thức -->
         <TextView

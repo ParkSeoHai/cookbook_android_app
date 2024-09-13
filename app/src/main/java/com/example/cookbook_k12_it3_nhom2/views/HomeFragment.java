@@ -6,16 +6,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.cookbook_k12_it3_nhom2.R;
 import com.example.cookbook_k12_it3_nhom2.controllers.CategoryController;
 import com.example.cookbook_k12_it3_nhom2.controllers.RecipeController;
+import com.example.cookbook_k12_it3_nhom2.controllers.UserController;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.CategoryDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.dtos.RecipeDto;
 import com.example.cookbook_k12_it3_nhom2.repositories.interfaces.FirestoreCallback;
@@ -34,6 +38,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView mRecyclerViewRecipe;
     private RecipeAdapter mAdapterRecipe;
     private List<RecipeDto> mRecipeList;
+
+    private EditText searchBar;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -88,29 +94,69 @@ public class HomeFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         mRecyclerViewRecipe.setLayoutManager(gridLayoutManager);
 
+        // Xử lý tìm kiếm công thức
+        searchBar = view.findViewById(R.id.searchBar);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Gọi trước khi văn bản thay đổi
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Gọi khi văn bản đang thay đổi
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Gọi sau khi văn bản đã thay đổi
+                UserController userController = new UserController();
+                userController.searchRecipeByTitle(s.toString(), new FirestoreCallback<List<RecipeDto>>() {
+                    @Override
+                    public void onSuccess(List<RecipeDto> result) {
+                        showRecipes(view, result);
+                    }
+                    @Override
+                    public void onFailure(Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+
         if (categoryId != null) {
             showRecipesOfCategory(view);
         } else {
-            showRecipes(view);
+            getRecipes(view);
         }
 
         return view;
     }
 
+    public void focusEditSearch() {
+        if (searchBar != null) {
+            searchBar.requestFocus();
+        }
+    }
+
+    public void showRecipes(View view, List<RecipeDto> recipeDtos) {
+        mRecipeList = new ArrayList<>();
+        mRecipeList = recipeDtos;
+        // Set adapter hiển thị item
+        mAdapterRecipe = new RecipeAdapter(requireContext(), mRecipeList);
+        mRecyclerViewRecipe.setAdapter(mAdapterRecipe);
+        // Hiển thị text recipeCount
+        TextView recipeCount = view.findViewById(R.id.recipeCount);
+        recipeCount.setText("Hiển thị " + recipeDtos.size() + " / " + recipeDtos.size() + " công thức");
+    }
+
     // Hiển thị danh sách recipe trong trang chủ
-    public void showRecipes(View view) {
+    public void getRecipes(View view) {
         RecipeController recipeController = new RecipeController();
         recipeController.getRecipes(new FirestoreCallback<List<RecipeDto>>() {
             @Override
             public void onSuccess(List<RecipeDto> result) {
-                mRecipeList = new ArrayList<>();
-                mRecipeList = result;
-                // Set adapter hiển thị item
-                mAdapterRecipe = new RecipeAdapter(requireContext(), mRecipeList);
-                mRecyclerViewRecipe.setAdapter(mAdapterRecipe);
-                // Hiển thị text recipeCount
-                TextView recipeCount = view.findViewById(R.id.recipeCount);
-                recipeCount.setText("Hiển thị " + result.size() + " / " + result.size() + " công thức");
+                showRecipes(view, result);
             }
             @Override
             public void onFailure(Exception e) {

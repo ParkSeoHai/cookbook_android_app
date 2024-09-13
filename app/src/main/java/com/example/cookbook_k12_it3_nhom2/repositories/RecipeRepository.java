@@ -413,9 +413,9 @@ public class RecipeRepository {
     }
 
     public void searchByTitle(String title, FirestoreCallback<List<RecipeDto>> callback) {
-//        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes")
-                .whereEqualTo("title", title)
+                .whereGreaterThanOrEqualTo("title", title)
+                .whereLessThanOrEqualTo("title", title + "\uf8ff")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -430,11 +430,17 @@ public class RecipeRepository {
                                 recipeDtos.add(recipeDto);
                             }
                             callback.onSuccess(recipeDtos);
-//                            taskCompletionSource.setResult(null);
+                        } else {
+                            callback.onFailure(new Exception("Lỗi khi tìm kiếm công thức nấu ăn"));
                         }
                     }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        callback.onFailure(e);
+                    }
                 });
-//        return taskCompletionSource.getTask();
     }
 
     public Task<Void> detail(String recipeId, FirestoreCallback<RecipeDto> callback) {
