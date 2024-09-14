@@ -9,10 +9,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="vn.nhom2eaut.bookchefk12" />
+                  <option name="mobileSdkAppId" value="1:778796616238:android:531905235f4219703e2dbf" />
+                  <option name="projectId" value="my-cookbook-project-1" />
+                  <option name="projectNumber" value="778796616238" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
