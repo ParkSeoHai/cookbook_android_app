@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:padding="16dp"
     android:background="@color/background"
     tools:context=".views.RecipeInstructionFragment">
 
-    <LinearLayout
+    <!-- TextView mô tả tiêu đề hoặc thông tin khác -->
+    <TextView
+        android:id="@+id/tv_ingredients_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Các bước thực hiện chi tiết:"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingStart="6dp"
+        android:layout_marginTop="10dp" />
+
+    <!-- RecyclerView hiển thị danh sách nguyên liệu -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_instructions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:nestedScrollingEnabled="false"
+        android:layout_marginTop="10dp" />
 
-        <!-- TextView mô tả tiêu đề hoặc thông tin khác -->
-        <TextView
-            android:id="@+id/tv_ingredients_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Các bước thực hiện chi tiết:"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingStart="6dp"
-            android:layout_marginTop="10dp" />
-
-        <!-- RecyclerView hiển thị danh sách nguyên liệu -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_instructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:layout_marginTop="10dp" />
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
