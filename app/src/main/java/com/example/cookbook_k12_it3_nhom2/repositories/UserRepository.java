@@ -209,7 +209,7 @@ public class UserRepository {
                             }
 
                             if (userExist) {
-                                callback.onFailure(new Exception("User already exists"));
+                                callback.onFailure(new Exception("Username đã được sử dụng"));
                             } else {
                                 User user = new User();
                                 user.setName_display(username + " " + "user");
@@ -221,7 +221,7 @@ public class UserRepository {
                                             callback.onSuccess(true);
                                         })
                                         .addOnFailureListener(e -> {
-                                            callback.onFailure(new Exception("Register failed " + e.getMessage()));
+                                            callback.onFailure(new Exception("Đăng kí thất bại " + e.getMessage()));
                                         });
                             }
                         } else {

@@ -22,11 +22,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/iconBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:background="@color/white"
+            android:src="@drawable/baseline_arrow_back_ios_24_black"/>
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="40dp"
             android:text="Register"
             android:textAlignment="center"
             android:textColor="#0B1B32"
@@ -44,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Username* :"
+                android:textColor="@color/black"
                 android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,6 +68,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Password* :"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
                 android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,6 +84,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:hint="Repeat password* :"
+                android:textColor="@color/black"
+                android:inputType="textPassword"
                 android:padding="12dp" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -81,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="60dp"
             android:layout_marginRight="60dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="#0B1B32"
             android:text="Register"
             android:textColor="@color/white" />
