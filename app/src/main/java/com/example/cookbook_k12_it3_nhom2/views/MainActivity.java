@@ -96,9 +96,37 @@ public class MainActivity extends AppCompatActivity {
         // Click icon search -> focus edit text search
         ImageView searchIcon = findViewById(R.id.searchIcon);
         searchIcon.setOnClickListener(v -> {
-            HomeFragment fragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.frame_container);
-            fragment.focusEditSearch();
+            // Kiểm tra nếu fragment hiện tại không phải là HomeFragment thì mới load lại HomeFragment
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_container);
+
+            // Nếu fragment hiện tại không phải là HomeFragment thì load HomeFragment
+            if (!(currentFragment instanceof HomeFragment)) {
+                loadHomeFragmentAndFocus();
+            } else {
+                // Nếu là HomeFragment rồi, chỉ cần focus vào EditText
+                if (currentFragment != null) {
+                    ((HomeFragment) currentFragment).focusEditSearch();
+                }
+            }
         });
+    }
+
+    private void loadHomeFragmentAndFocus() {
+        // Tạo một instance mới của HomeFragment
+        HomeFragment homeFragment = new HomeFragment(null, null);
+
+        // Load fragment
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, homeFragment)
+                .commit();
+
+        // Thực hiện sau khi fragment được load
+        getSupportFragmentManager().executePendingTransactions();
+
+        // Gọi phương thức focus vào EditText
+        if (homeFragment != null) {
+            homeFragment.focusEditSearch();
+        }
     }
 
     private void loadFragment(Fragment fragment) {

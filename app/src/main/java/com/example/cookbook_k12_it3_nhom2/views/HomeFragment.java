@@ -1,5 +1,6 @@
 package com.example.cookbook_k12_it3_nhom2.views;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -136,6 +138,9 @@ public class HomeFragment extends Fragment {
     public void focusEditSearch() {
         if (searchBar != null) {
             searchBar.requestFocus();
+            // Hiển thị bàn phím
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(searchBar, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
