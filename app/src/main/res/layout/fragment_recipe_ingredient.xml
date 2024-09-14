@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/background"
-    tools:context=".views.RecipeIngredientFragment">
+    tools:context="vn.nhom2eaut.bookchefk12.views.RecipeIngredientFragment">
 
     <!-- Section Tăng giảm số phần ăn -->
     <LinearLayout

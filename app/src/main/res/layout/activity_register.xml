@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0B1B32"
-    tools:context=".views.registerActivity">
+    tools:context="vn.nhom2eaut.bookchefk12.views.registerActivity">
 
     <LinearLayout
         android:layout_width="346dp"

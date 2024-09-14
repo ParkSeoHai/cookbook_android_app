@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@color/background"
-    tools:context=".views.RecipeInstructionFragment">
+    tools:context="vn.nhom2eaut.bookchefk12.views.RecipeInstructionFragment">
 
     <!-- TextView mô tả tiêu đề hoặc thông tin khác -->
     <TextView

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.cookbook_k12_it3_nhom2"
+    namespace = "vn.nhom2eaut.bookchefk12"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.cookbook_k12_it3_nhom2"
+        applicationId = "vn.nhom2eaut.bookchefk12"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

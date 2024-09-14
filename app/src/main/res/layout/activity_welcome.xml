@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0c1b32"
-    tools:context=".views.WelcomeActivity">
+    tools:context="vn.nhom2eaut.bookchefk12.views.WelcomeActivity">
 
     <ImageView
         android:id="@+id/imageView"

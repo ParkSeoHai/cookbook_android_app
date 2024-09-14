@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".views.RecipeAboutFragment">.
+    tools:context="vn.nhom2eaut.bookchefk12.views.RecipeAboutFragment">.
 
     <RelativeLayout
         android:id="@+id/recipeLayout"
