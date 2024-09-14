@@ -25,6 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -551,7 +553,10 @@ public class RecipeRepository {
                                                 average_rating = totalRating / number_of_ratings;
                                             }
 
-                                            recipeDto.setAverage_rating(average_rating);
+                                            BigDecimal average_rating_format = new BigDecimal(average_rating);
+                                            average_rating_format = average_rating_format.setScale(1, RoundingMode.HALF_UP);  // Làm tròn đến 1 chữ số thập phân: vd: 4.66667 -> 4.7
+
+                                            recipeDto.setAverage_rating(average_rating_format.floatValue());
                                             recipeDto.setRatingByStars(ratingsByStar);
 
                                             // Tất cả các dữ liệu đã được get thành công
