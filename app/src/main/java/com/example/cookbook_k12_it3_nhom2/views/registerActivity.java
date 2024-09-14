@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -66,6 +67,12 @@ public class registerActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Back to login
+        ImageView btnBack = findViewById(R.id.iconBack);
+        btnBack.setOnClickListener(v -> {
+            finish();
+        });
     }
 
     public void register(String username, String password) {
@@ -81,7 +88,7 @@ public class registerActivity extends AppCompatActivity {
             @Override
             public void onFailure(Exception e) {
                 Log.i("register error", e.toString());
-                Toast.makeText(registerActivity.this, "Đăng kí thất bại!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(registerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
