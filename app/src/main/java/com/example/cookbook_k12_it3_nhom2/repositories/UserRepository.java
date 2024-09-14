@@ -212,7 +212,7 @@ public class UserRepository {
                                 callback.onFailure(new Exception("Username đã được sử dụng"));
                             } else {
                                 User user = new User();
-                                user.setName_display(username + " " + "user");
+                                user.setName_display(username.toUpperCase());
                                 user.setUsername(username);
                                 user.setPassword(password);
                                 db.collection("users")
