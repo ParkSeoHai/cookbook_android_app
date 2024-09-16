@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:padding="16dp">
 
     <!-- User Name -->
@@ -13,22 +14,24 @@
         android:text="User Name"
         android:textStyle="bold"
         android:textSize="16sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!-- Rating Stars -->
     <RatingBar
         android:id="@+id/ratingBar"
-        style="?android:attr/ratingBarStyleSmall"
+        style="@android:style/Widget.Holo.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="4"
+        android:layout_marginStart="8dp"
         android:isIndicator="true"
-        app:layout_constraintTop_toTopOf="parent"
+        android:numStars="5"
+        android:progressTint="@color/yellow"
+        android:rating="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvUserName"
-        android:layout_marginStart="8dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Time -->
     <TextView
@@ -48,6 +51,7 @@
         android:layout_height="wrap_content"
         android:text="This is a very delicious dish! I love it!"
         android:layout_marginTop="8dp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@id/tvTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

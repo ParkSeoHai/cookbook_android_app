@@ -21,6 +21,7 @@ import vn.nhom2eaut.bookchefk12.repositories.interfaces.FirestoreCallback;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class registerActivity extends AppCompatActivity {
+    private Button btnregister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class registerActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button btnregister = findViewById(R.id.btnRegister);
+        btnregister = findViewById(R.id.btnRegister);
 
         TextInputLayout lUsername = findViewById(R.id.layoutUsername);
         TextInputLayout lPass = findViewById(R.id.layoutPassword);
@@ -46,6 +47,9 @@ public class registerActivity extends AppCompatActivity {
         btnregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Vô hiệu hóa nút sau khi nhấn
+                btnregister.setEnabled(false);
+
                 String username = eUsername.getText().toString();
                 String password = ePass.getText().toString();
                 String repass = eRePass.getText().toString();
@@ -89,6 +93,8 @@ public class registerActivity extends AppCompatActivity {
             public void onFailure(Exception e) {
                 Log.i("register error", e.toString());
                 Toast.makeText(registerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                // Vô hiệu hóa nút sau khi nhấn
+                btnregister.setEnabled(true);
             }
         });
     }

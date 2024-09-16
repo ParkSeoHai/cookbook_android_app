@@ -21,10 +21,11 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:numStars="5"
+        android:progressTint="@color/yellow"
         android:rating="0"
-        android:stepSize="1"
-        android:layout_gravity="center_horizontal" />
+        android:stepSize="1" />
 
     <!-- Nội dung đánh giá -->
     <EditText
@@ -42,8 +43,10 @@
         android:id="@+id/submitRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gửi"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/primary"
+        android:textSize="20sp"
+        android:text="Gửi" />
 
 </LinearLayout>

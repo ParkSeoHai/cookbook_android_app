@@ -61,6 +61,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:paddingStart="6dp"
+        android:textColor="@color/white"
         android:layout_marginTop="40dp" />
 
     <!-- RecyclerView hiển thị danh sách nguyên liệu -->
