@@ -25,6 +25,7 @@ public class FavoriteRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức chuyển đổi đối tượng models -> dtos
     public FavoriteDto convertToDto(@NonNull Favorite favorite) {
         FavoriteDto favoriteDto = new FavoriteDto();
         favoriteDto.setFavoriteId(favorite.getFavoriteId());
@@ -32,6 +33,7 @@ public class FavoriteRepository {
         return favoriteDto;
     }
 
+    // Phương thức lấy danh sách công thức yêu thích theo id người dùng
     public Task<Void> allByUserId(String userId, FirestoreCallback<List<FavoriteDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("favorites").whereEqualTo("userId", userId)

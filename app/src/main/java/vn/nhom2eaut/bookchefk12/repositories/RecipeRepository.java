@@ -36,6 +36,7 @@ public class RecipeRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức khởi tạo dữ liệu
     public void initData() {
         List<Recipe> recipes = new ArrayList<>();
 
@@ -281,6 +282,7 @@ public class RecipeRepository {
         }
     }
 
+    // Phương thức chuyển đổi dữ liệu models -> dtos
     public RecipeDto convertToDto(@NonNull Recipe recipe) {
         RecipeDto recipeDto = new RecipeDto();
         recipeDto.setRecipeId(recipe.getRecipeId());
@@ -292,6 +294,7 @@ public class RecipeRepository {
         return recipeDto;
     }
 
+    // Phương thức lấy danh sách công thức nấu ăn
     public void all(FirestoreCallback<List<RecipeDto>> callback) {
         db.collection("recipes")
                 .get()
@@ -315,6 +318,7 @@ public class RecipeRepository {
                 });
     }
 
+    // Phương thức tìm kiếm công thức theo id
     public Task<Void> findById(String recipeId, FirestoreCallback<RecipeDto> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes").document(recipeId)
@@ -350,6 +354,7 @@ public class RecipeRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phuương thức lấy danh sách công thức theo id người dùng
     public Task<Void> allByUserId(String userId, FirestoreCallback<List<RecipeDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes")
@@ -377,6 +382,7 @@ public class RecipeRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phương thức lấy danh sách công thức theo id danh mục
     public Task<Void> allByCategoryId(String categoryId, FirestoreCallback<List<RecipeDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes")
@@ -411,6 +417,7 @@ public class RecipeRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phương thức tìm kiếm công thức theo tiêu đề món ăn
     public void searchByTitle(String title, FirestoreCallback<List<RecipeDto>> callback) {
         db.collection("recipes")
                 .whereGreaterThanOrEqualTo("title", title)
@@ -442,6 +449,7 @@ public class RecipeRepository {
                 });
     }
 
+    // Phương thức lấy dữ liệu chi tiết của công thức nấu ăn theo id
     public Task<Void> detail(String recipeId, FirestoreCallback<RecipeDto> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes")
@@ -568,6 +576,7 @@ public class RecipeRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phương thức lấy danh sách nguyên liệu của công thức theo id công thức
     public Task<Void> getIngredientsByRecipeId(String recipeId, FirestoreCallback<List<IngredientDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
 

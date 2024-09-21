@@ -22,6 +22,7 @@ public class IngredientRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức khởi tạo dữ liệu
     public void initData() {
         List<Ingredient> ingredients = new ArrayList<>();
 
@@ -130,6 +131,7 @@ public class IngredientRepository {
         }
     }
 
+    // Phương thức lấy nguyên liệu theo id
     public Task<Void> findById(String ingredientId, FirestoreCallback<Ingredient> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("ingredients").document(ingredientId).get()

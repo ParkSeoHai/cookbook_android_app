@@ -26,6 +26,7 @@ public class CategoryRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức khởi tạo dữ liệu
     public void initData() {
         List<Category> categories = new ArrayList<>();
 
@@ -78,6 +79,7 @@ public class CategoryRepository {
         }
     }
 
+    // Phương thức chuyển đổi đối tượng models -> dtos
     public CategoryDto convertToDto(@NonNull Category category) {
         CategoryDto categoryDto = new CategoryDto();
         categoryDto.setCategoryId(category.getCategoryId());
@@ -87,6 +89,7 @@ public class CategoryRepository {
         return categoryDto;
     }
 
+    // Phương thức lấy danh sách danh mục
     public void all(FirestoreCallback<List<CategoryDto>> callback) {
         db.collection("categories")
                 .get()
@@ -110,6 +113,7 @@ public class CategoryRepository {
                 });
     }
 
+    // Phương thức lấy dữ liệu chi tiết của danh mục cụ thể
     public void detail(String categoryId, FirestoreCallback<CategoryDto> callback) {
         db.collection("categories")
                 .document(categoryId)
@@ -164,6 +168,7 @@ public class CategoryRepository {
                 });
     }
 
+    // Phương thức lấy danh mục theo id
     public Task<Void> findById(String categoryId, FirestoreCallback<CategoryDto> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("categories").document(categoryId)

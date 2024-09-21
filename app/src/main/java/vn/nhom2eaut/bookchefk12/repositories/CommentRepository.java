@@ -27,6 +27,7 @@ public class CommentRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức khởi tạo dữ liệu
     public void initData() {
         List<Comment> comments = new ArrayList<>();
 
@@ -84,6 +85,7 @@ public class CommentRepository {
         }
     }
 
+    // Phương thức chuyển đổi đối tượng models -> dtos
     public CommentDto convertToDto(@NonNull Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setCommentId(comment.getCommentId());
@@ -93,6 +95,7 @@ public class CommentRepository {
         return commentDto;
     }
 
+    // Phương thức lấy danh sách đánh giá theo id người dùng
     public Task<Void> allByUserId(String userId, FirestoreCallback<List<CommentDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("comments")
@@ -154,6 +157,7 @@ public class CommentRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phương thức lấy danh sách đánh giá theo id công thức
     public Task<Void> allByRecipeId(String recipeId, FirestoreCallback<List<CommentDto>> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes").document(recipeId).get()

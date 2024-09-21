@@ -32,6 +32,7 @@ public class UserRepository {
         this.db = FirebaseFirestore.getInstance();
     }
 
+    // Phương thức chuyển đổi models -> dtos
     public UserDto convertToDto(@NonNull User user) {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
@@ -43,6 +44,7 @@ public class UserRepository {
         return userDto;
     }
 
+    // Phương thức tìm kiếm người dùng theo id
     public Task<Void> findById(String userId, FirestoreCallback<UserDto> callback) {
         TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("users").document(userId)
@@ -72,6 +74,7 @@ public class UserRepository {
         return taskCompletionSource.getTask();
     }
 
+    // Phương thức lấy dữ liệu chi tiết về người dùng
     public void getProfile(String userId, FirestoreCallback<UserDto> callback) {
         db.collection("users").document(userId)
                 .get()
@@ -154,6 +157,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức đăng nhập
     public void login(String username, String password, FirestoreCallback<UserDto> callback) {
         db.collection("users").whereEqualTo("username", username)
                 .get()
@@ -193,6 +197,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức đăng ký tài khoản
     public void register(String username, String password, FirestoreCallback<Boolean> callback) {
         db.collection("users").whereEqualTo("username", username)
                 .get()
@@ -229,6 +234,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức kiểm tra công thức có trong danh sách công thức yêu thích hay chưa
     public void checkRecipeInFavorite(String recipeId, String userId, FirestoreCallback<Boolean> callback) {
         db.collection("favorites")
                 .whereEqualTo("recipeId", recipeId)
@@ -260,6 +266,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức thêm công thức vào danh sách yêu thích
     public void addRecipeToFavorite(Favorite favorite, FirestoreCallback<Boolean> callback) {
         db.collection("favorites")
                 .add(favorite)
@@ -274,6 +281,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức xóa công thức khỏi danh sách yêu thích
     public void removeRecipeInFavorite(String recipeId, String userId, FirestoreCallback<Boolean> callback) {
         db.collection("favorites")
                 .whereEqualTo("recipeId", recipeId)
@@ -318,6 +326,7 @@ public class UserRepository {
                 });
     }
 
+    // Phương thức thêm đánh giá công thức
     public void addComment(Comment comment, FirestoreCallback<Boolean> callback) {
         // Kiểm tra comment tồn tại chưa, mỗi user chỉ comment 1 lần / recipe
         db.collection("comments")
