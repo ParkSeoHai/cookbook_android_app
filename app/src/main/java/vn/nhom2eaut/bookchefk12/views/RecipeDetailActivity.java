@@ -113,25 +113,48 @@ public class RecipeDetailActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.action_favorite) {
-                    // Xử lý logic thêm/xóa yêu thích
-                    if (recipeIsFavorite) {
-                        removeRecipeInFavorite(view, recipeId, userId);
-                    } else
-                        addRecipeToFavorite(view, recipeId, userId);
-
+                    if (userId == null) {
+                        showLoginDialog(); // Yêu cầu đăng nhập nếu chưa đăng nhập
+                    } else {
+                        // Xử lý logic thêm/xóa yêu thích
+                        if (recipeIsFavorite) {
+                            removeRecipeInFavorite(view, recipeId, userId);
+                        } else {
+                            addRecipeToFavorite(view, recipeId, userId);
+                        }
+                    }
                     return true;
                 } else if (item.getItemId() == R.id.action_rate) {
-                    // Xử lý logic đánh giá tại đây
-                    showRatingDialog();
+                    // Kiểm tra đăng nhập trước khi đánh giá
+                    if (userId == null) {
+                        showLoginDialog(); // Yêu cầu đăng nhập nếu chưa đăng nhập
+                    } else {
+                        showRatingDialog(); // Cho phép đánh giá nếu đã đăng nhập
+                    }
                     return true;
                 }
                 return false;
             }
+
         });
 
         // Hiển thị PopupMenu
         popup.show();
     }
+
+    private void showLoginDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Yêu cầu đăng nhập")
+                .setMessage("Bạn cần đăng nhập để thực hiện chức năng này. Bạn có muốn chuyển đến trang đăng nhập không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Chuyển người dùng đến trang đăng nhập
+                    startActivity(new Intent(RecipeDetailActivity.this, loginActivity.class));
+                })
+                .setNegativeButton("Không", (dialog, which) -> dialog.dismiss())
+                .setCancelable(false)
+                .show();
+    }
+
 
     private void showRatingDialog() {
         // Tạo và cấu hình Dialog
