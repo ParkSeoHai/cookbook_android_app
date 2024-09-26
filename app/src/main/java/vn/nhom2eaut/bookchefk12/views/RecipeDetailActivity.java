@@ -3,6 +3,7 @@ package vn.nhom2eaut.bookchefk12.views;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -25,6 +26,8 @@ import vn.nhom2eaut.bookchefk12.R;
 import vn.nhom2eaut.bookchefk12.controllers.UserController;
 import vn.nhom2eaut.bookchefk12.repositories.interfaces.FirestoreCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
@@ -49,6 +52,20 @@ public class RecipeDetailActivity extends AppCompatActivity {
         userController = new UserController();
 
         loadFragment(new RecipeAboutFragment(recipeId));    // Default fragment
+
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, pendingDynamicLinkData -> {
+                    Uri deepLink = null;
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.getLink();
+                    }
+
+                    if (deepLink != null) {
+                        String recipeId = deepLink.getLastPathSegment();  // Lấy id công thức từ link
+                    }
+                })
+                .addOnFailureListener(this, e -> Log.w("DynamicLink", "getDynamicLink:onFailure", e));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -132,7 +149,12 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         showRatingDialog(); // Cho phép đánh giá nếu đã đăng nhập
                     }
                     return true;
+                }else if (item.getItemId() == R.id.action_share) {
+                    // Gọi hàm tạo link chia sẻ khi người dùng chọn chia sẻ
+                    createShareableLink(recipeId);
+                    return true;
                 }
+
                 return false;
             }
 
@@ -263,4 +285,39 @@ public class RecipeDetailActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void createShareableLink(String recipeId) {
+        FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("https://cookchefapp.page.link/29hQ/" + recipeId))  // Link đích
+                .setDomainUriPrefix("https://cookchefapp.page.link")  // Domain từ Firebase
+                .setAndroidParameters(
+                        new DynamicLink.AndroidParameters.Builder("vn.nhom2eaut.bookchefk12")
+                                .setMinimumVersion(1)  // Phiên bản tối thiểu
+                                .build())
+                .setSocialMetaTagParameters(
+                        new DynamicLink.SocialMetaTagParameters.Builder()
+                                .setTitle("Chia sẻ công thức")
+                                .setDescription("Xem công thức tuyệt vời này!")
+                                .build())
+                .buildShortDynamicLink()
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        Uri shortLink = task.getResult().getShortLink();
+                        shareLink(shortLink.toString());  // Gọi hàm chia sẻ link
+                    } else {
+                        Toast.makeText(this, "Tạo liên kết chia sẻ thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void shareLink(String shortLink) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "Xem công thức này: " + shortLink);
+        sendIntent.setType("text/plain");
+
+        Intent shareIntent = Intent.createChooser(sendIntent, null);
+        startActivity(shareIntent);
+    }
+
 }

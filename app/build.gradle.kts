@@ -32,6 +32,8 @@ android {
     }
 }
 
+
+
 dependencies {
 
     implementation(libs.appcompat)
@@ -46,4 +48,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.glide.transformations)
     annotationProcessor(libs.glide.compiler)
+
+    implementation(libs.firebase.dynamic.links)  // Thêm Firebase Dynamic Links từ toml
 }
+

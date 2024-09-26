@@ -11,10 +11,20 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cookbook_k12_it3_nhom2"
-        tools:targetApi="31">
+        tools:targetApi="31"
+        tools:ignore="AppLinkUrlError">
         <activity
             android:name="vn.nhom2eaut.bookchefk12.views.RecipeDetailActivity"
-            android:exported="false" />
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="cookchefapp.page.link" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="vn.nhom2eaut.bookchefk12.views.WelcomeActivity"
             android:exported="true">
