@@ -46,4 +46,11 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.glide.transformations)
     annotationProcessor(libs.glide.compiler)
+
+    // Import the BoM for the Firebase platform
+    implementation(platform(libs.firebase.bom)) // Thêm BOM Firebase
+
+    // Add the dependencies for the Dynamic Links and Analytics libraries
+    implementation(libs.firebase.dynamic.links) // Firebase Dynamic Links
+    implementation(libs.firebase.analytics) // Firebase Analytics
 }

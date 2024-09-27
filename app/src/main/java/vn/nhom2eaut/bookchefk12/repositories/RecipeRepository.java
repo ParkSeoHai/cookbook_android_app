@@ -295,7 +295,8 @@ public class RecipeRepository {
     }
 
     // Phương thức lấy danh sách công thức nấu ăn
-    public void all(FirestoreCallback<List<RecipeDto>> callback) {
+    public Task<Void> all(FirestoreCallback<List<RecipeDto>> callback) {
+        TaskCompletionSource<Void> taskCompletionSource = new TaskCompletionSource<>();
         db.collection("recipes")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -303,19 +304,105 @@ public class RecipeRepository {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<RecipeDto> recipes = new ArrayList<>();
+                            List<Task<Void>> allTasks = new ArrayList<>();  // Danh sách tất cả các Task để chờ
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Recipe recipe = document.toObject(Recipe.class);
                                 recipe.setRecipeId(document.getId());
-                                // Convert to RecipeDto
                                 RecipeDto recipeDto = convertToDto(recipe);
+
+                                // Lấy bình luận
+                                CommentRepository commentRepository = new CommentRepository();
+                                Task<Void> taskComment = commentRepository.allByRecipeId(recipeDto.getRecipeId(), new FirestoreCallback<List<CommentDto>>() {
+                                    @Override
+                                    public void onSuccess(List<CommentDto> commentDtos) {
+                                        recipeDto.setCommentDtos(commentDtos);
+                                        updateRatings(recipeDto);  // Tính toán rating
+                                    }
+
+                                    @Override
+                                    public void onFailure(Exception e) {
+                                        callback.onFailure(e);
+                                    }
+                                });
+
+                                allTasks.add(taskComment);
                                 recipes.add(recipeDto);
                             }
-                            callback.onSuccess(recipes);
+
+                            // Đợi tất cả các task hoàn thành
+                            Tasks.whenAll(allTasks).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> allTask) {
+                                    if (allTask.isSuccessful()) {
+                                        callback.onSuccess(recipes);
+                                    } else {
+                                        callback.onFailure(allTask.getException());
+                                    }
+                                }
+                            });
                         } else {
                             callback.onFailure(task.getException());
                         }
                     }
                 });
+        return taskCompletionSource.getTask();
+    }
+
+    // Tính toán rating
+    private void updateRatings(RecipeDto recipeDto) {
+        int number_of_ratings = 0;      // Tổng số đánh giá
+        float totalRating = 0;          // Tổng số điểm đánh giá
+        int countOneStar = 0;
+        int countTwoStar = 0;
+        int countThreeStar = 0;
+        int countFourStar = 0;
+        int countFiveStar = 0;
+
+        for (CommentDto cmt : recipeDto.getCommentDtos()) {
+            switch (cmt.getRating()) {
+                case 1:
+                    countOneStar++;
+                    break;
+                case 2:
+                    countTwoStar++;
+                    break;
+                case 3:
+                    countThreeStar++;
+                    break;
+                case 4:
+                    countFourStar++;
+                    break;
+                case 5:
+                    countFiveStar++;
+                    break;
+            }
+            totalRating += cmt.getRating();
+            number_of_ratings++;
+        }
+
+        Map<String, Integer> ratingsByStar = new HashMap<>();
+        ratingsByStar.put("1", countOneStar);
+        ratingsByStar.put("2", countTwoStar);
+        ratingsByStar.put("3", countThreeStar);
+        ratingsByStar.put("4", countFourStar);
+        ratingsByStar.put("5", countFiveStar);
+
+        // Đặt tổng số đánh giá vào recipeDto
+        recipeDto.setNumber_of_ratings(number_of_ratings);
+
+        // Tính toán điểm trung bình
+        float average_rating = 0;
+        if (number_of_ratings > 0) {
+            average_rating = totalRating / number_of_ratings;
+        }
+
+        // Làm tròn đến 1 chữ số thập phân: ví dụ 4.66667 -> 4.7
+        BigDecimal average_rating_format = new BigDecimal(average_rating);
+        average_rating_format = average_rating_format.setScale(1, RoundingMode.HALF_UP);
+
+        // Đặt điểm trung bình và số lượng đánh giá theo sao vào recipeDto
+        recipeDto.setAverage_rating(average_rating_format.floatValue());
+        recipeDto.setRatingByStars(ratingsByStar);
     }
 
     // Phương thức tìm kiếm công thức theo id

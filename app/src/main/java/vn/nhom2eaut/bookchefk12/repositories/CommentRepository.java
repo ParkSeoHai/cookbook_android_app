@@ -15,9 +15,11 @@ import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CommentRepository {
@@ -208,6 +210,8 @@ public class CommentRepository {
                                                         @Override
                                                         public void onComplete(@NonNull Task<Void> task) {
                                                             if (task.isSuccessful()) {
+                                                                // Sắp xếp dữ liệu theo createdAt trong ứng dụng
+                                                                Collections.sort(commentDtos, (c1, c2) -> c2.getCreatedAt().compareTo(c1.getCreatedAt()));
                                                                 callback.onSuccess(commentDtos);
                                                                 taskCompletionSource.setResult(null);
                                                             } else {

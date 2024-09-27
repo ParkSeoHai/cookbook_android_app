@@ -161,6 +161,9 @@ public class HomeFragment extends Fragment {
         recipeController.getRecipes(new FirestoreCallback<List<RecipeDto>>() {
             @Override
             public void onSuccess(List<RecipeDto> result) {
+                for (RecipeDto item : result) {
+                    Log.i("recipe_" + item.getRecipeId(), item.toString());
+                }
                 showRecipes(view, result);
             }
             @Override
