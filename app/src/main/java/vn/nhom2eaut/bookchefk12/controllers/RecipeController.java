@@ -14,9 +14,9 @@ public class RecipeController {
         this.recipeRepository = new RecipeRepository();
     }
 
-    public void initData() {
-        this.recipeRepository.initData();
-    }
+//    public void initData() {
+//        this.recipeRepository.initData();
+//    }
 
     public void getRecipes(FirestoreCallback<List<RecipeDto>> callback) {
         recipeRepository.all(new FirestoreCallback<List<RecipeDto>>() {

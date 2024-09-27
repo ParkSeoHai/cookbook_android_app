@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp"
+    android:fillViewport="true"
     android:background="@color/background"
     tools:context="vn.nhom2eaut.bookchefk12.views.RecipeInstructionFragment">
 
-    <!-- TextView mô tả tiêu đề hoặc thông tin khác -->
-    <TextView
-        android:id="@+id/tv_ingredients_title2"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:paddingStart="6dp"
-        android:text="Video hướng dẫn chi tiết:"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="281dp"
-        android:id="@+id/webview" />
+        <!-- TextView mô tả tiêu đề hoặc thông tin khác -->
+        <TextView
+            android:id="@+id/tv_ingredients_title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingStart="6dp"
+            android:text="Video hướng dẫn chi tiết:"
+            android:textColor="@color/white"
+            android:layout_marginBottom="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_ingredients_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Các bước thực hiện chi tiết:"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingStart="6dp"
-        android:textColor="@color/white"
-        android:layout_marginTop="10dp" />
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:id="@+id/webview" />
 
-    <!-- RecyclerView hiển thị danh sách nguyên liệu -->
+        <TextView
+            android:id="@+id/tv_ingredients_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Các bước thực hiện chi tiết:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:paddingStart="6dp"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_instructions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:layout_marginTop="10dp" />
+        <!-- RecyclerView hiển thị danh sách nguyên liệu -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_instructions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginTop="10dp" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

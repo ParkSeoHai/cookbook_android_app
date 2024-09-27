@@ -79,12 +79,7 @@ public class RecipeInstructionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_instruction, container, false);
-        // Thiết lập WebView và hiển thị video
-        WebView webView = view.findViewById(R.id.webview);
-        String video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/V2KCAfHjySQ?si=BiQKoLpDrwljm1pd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
-        webView.loadData(video, "text/html", "utf-8");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
+
         // Thiết lập RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view_instructions);
         instructionAdapter = new InstructionAdapter(new ArrayList<>());
@@ -102,6 +97,16 @@ public class RecipeInstructionFragment extends Fragment {
             public void onSuccess(RecipeDto result) {
                 // Hiển thị danh sách instructions
                 instructionAdapter.updateInstructions(result.getSteps());
+
+                // Thiết lập WebView và hiển thị video
+                WebView webView = view.findViewById(R.id.webview);
+                String video="<iframe width=\"100%\" height=\"100%\" src=\"" +
+                        result.getVideoUrl() +
+                        "\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
+                webView.loadData(video, "text/html", "utf-8");
+                webView.getSettings().setJavaScriptEnabled(true);
+                webView.setWebChromeClient(new WebChromeClient());
+                Log.i("video", result.getVideoUrl());
             }
             @Override
             public void onFailure(Exception e) {

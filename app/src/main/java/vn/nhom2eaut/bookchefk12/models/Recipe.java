@@ -14,12 +14,14 @@ public class Recipe {
     private Map<String, String> time; // Thời gian chuẩn bị, thời gian nấu
     private int servings;
     private String imageUrl;
+    private String videoUrl;
 
     public Recipe() {}
 
     public Recipe(String title, String description,
                   String authorId, String categoryId, List<Recipe_Ingredient> ingredients,
-                  List<Step> steps, Map<String, String> time, int servings, String imageUrl) {
+                  List<Step> steps, Map<String, String> time, int servings, String imageUrl,
+                  String videoUrl) {
         this.title = title;
         this.description = description;
         this.authorId = authorId;
@@ -29,6 +31,7 @@ public class Recipe {
         this.time = time;
         this.servings = servings;
         this.imageUrl = imageUrl;
+        this.videoUrl = videoUrl;
     }
 
     public Recipe(String title) {
@@ -113,6 +116,14 @@ public class Recipe {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     @Override

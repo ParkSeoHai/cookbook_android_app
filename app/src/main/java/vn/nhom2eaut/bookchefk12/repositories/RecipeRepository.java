@@ -37,250 +37,250 @@ public class RecipeRepository {
     }
 
     // Phương thức khởi tạo dữ liệu
-    public void initData() {
-        List<Recipe> recipes = new ArrayList<>();
-
-        // Recipe 1: Bún Thịt Nướng
-        List<Recipe_Ingredient> bunThitNuongIngredients = new ArrayList<>();
-        bunThitNuongIngredients.add(new Recipe_Ingredient("ky4mVZGkpIFF4NBewO1c", 200));    // Thịt bò
-        bunThitNuongIngredients.add(new Recipe_Ingredient("Gi6KsjCb3wRbAd8jJqzs", 150));    // Bún tươi
-        bunThitNuongIngredients.add(new Recipe_Ingredient("yplJ6Xd7s1MRZuedL90z", 1));  // Hành tây
-        bunThitNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 3));   // Tỏi
-
-        List<Step> bunThitNuongSteps = new ArrayList<>();
-        bunThitNuongSteps.add(new Step(1, "", "Ướp thịt bò với tỏi và gia vị."));
-        bunThitNuongSteps.add(new Step(2, "", "Nướng thịt bò cho đến khi chín."));
-        bunThitNuongSteps.add(new Step(3, "", "Luộc bún tươi và xếp lên đĩa."));
-        bunThitNuongSteps.add(new Step(4, "", "Đặt thịt bò lên bún và trang trí với hành tây thái lát."));
-
-        Map<String, String> bunThitNuongTime = new HashMap<>();
-        bunThitNuongTime.put("prep_time", "20 phút");
-        bunThitNuongTime.put("cook_time", "30 phút");
-
-//        Map<String, Object> bunThitNuongRating = new HashMap<>();
-//        bunThitNuongRating.put("average_rating", 4.5);
-//        bunThitNuongRating.put("number_of_ratings", 120);
+//    public void initData() {
+//        List<Recipe> recipes = new ArrayList<>();
 //
-//        Map<String, Integer> bunThitNuongRatingsByStars = new HashMap<>();
-//        bunThitNuongRatingsByStars.put("5", 80);
-//        bunThitNuongRatingsByStars.put("4", 30);
-//        bunThitNuongRatingsByStars.put("3", 10);
-
-        recipes.add(new Recipe(
-                "Bún Thịt Nướng",
-                "Món bún thịt nướng thơm ngon, dễ làm với thịt bò nướng và bún tươi.",
-                "9vQ00cgYviaraZuulQiT",
-                "GW2H6A2DdrFm1CgAyLfO",     // Món chính
-                bunThitNuongIngredients,
-                bunThitNuongSteps,
-                bunThitNuongTime,
-                2,
-                "https://example.com/bun_thit_nuong.jpg"
-        ));
-
-        // Recipe 2: Xôi Gấc
-        List<Recipe_Ingredient> xoiGacIngredients = new ArrayList<>();
-        xoiGacIngredients.add(new Recipe_Ingredient("DhcgrGNyKBuTPOdolW3M", 300));  // Gạo nếp
-        xoiGacIngredients.add(new Recipe_Ingredient("Rixa5H6yrhKuT8a3Xrrq", 1));     // Gấc
-        xoiGacIngredients.add(new Recipe_Ingredient("JYe5lRUwdpoLDhcCdfzm", 100));    // Dừa
-
-        List<Step> xoiGacSteps = new ArrayList<>();
-        xoiGacSteps.add(new Step(1, "", "Ngâm gạo nếp trong nước qua đêm."));
-        xoiGacSteps.add(new Step(2, "", "Trộn gạo nếp với thịt gấc đã làm sạch."));
-        xoiGacSteps.add(new Step(3, "", "Hấp xôi cho đến khi chín."));
-        xoiGacSteps.add(new Step(4, "", "Rắc dừa nạo lên xôi trước khi ăn."));
-
-        Map<String, String> xoiGacTime = new HashMap<>();
-        xoiGacTime.put("prep_time", "10 phút");
-        xoiGacTime.put("cook_time", "40 phút");
-
-//        Map<String, Object> xoiGacRating = new HashMap<>();
-//        xoiGacRating.put("average_rating", 4.7);
-//        xoiGacRating.put("number_of_ratings", 95);
+//        // Recipe 1: Bún Thịt Nướng
+//        List<Recipe_Ingredient> bunThitNuongIngredients = new ArrayList<>();
+//        bunThitNuongIngredients.add(new Recipe_Ingredient("ky4mVZGkpIFF4NBewO1c", 200));    // Thịt bò
+//        bunThitNuongIngredients.add(new Recipe_Ingredient("Gi6KsjCb3wRbAd8jJqzs", 150));    // Bún tươi
+//        bunThitNuongIngredients.add(new Recipe_Ingredient("yplJ6Xd7s1MRZuedL90z", 1));  // Hành tây
+//        bunThitNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 3));   // Tỏi
 //
-//        Map<String, Integer> xoiGacRatingsByStars = new HashMap<>();
-//        xoiGacRatingsByStars.put("5", 70);
-//        xoiGacRatingsByStars.put("4", 20);
-//        xoiGacRatingsByStars.put("3", 5);
-
-        recipes.add(new Recipe(
-                "Xôi Gấc",
-                "Xôi gấc truyền thống với màu đỏ tươi đẹp mắt và hương vị đặc trưng.",
-                "9vQ00cgYviaraZuulQiT",
-                "zjUpySjqvXmnmCcqAR4j",     // Ăn sáng
-                xoiGacIngredients,
-                xoiGacSteps,
-                xoiGacTime,
-                3,
-                "https://example.com/xoi_gac.jpg"
-        ));
-
-        // Recipe 3: Cá Hồi Nướng
-        List<Recipe_Ingredient> caHoiNuongIngredients = new ArrayList<>();
-        caHoiNuongIngredients.add(new Recipe_Ingredient("h4bJrNUBCQSVsNcqgrm9", 250));  // Cá hồi
-        caHoiNuongIngredients.add(new Recipe_Ingredient("C8ePV1nXAGzrfkHQkUPa", 2));    // Dầu olive
-        caHoiNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 2));    // Tỏi
-
-        List<Step> caHoiNuongSteps = new ArrayList<>();
-        caHoiNuongSteps.add(new Step(1, "", "Ướp cá hồi với dầu olive và tỏi."));
-        caHoiNuongSteps.add(new Step(2, "", "Nướng cá hồi cho đến khi chín vàng."));
-        caHoiNuongSteps.add(new Step(3, "", "Thưởng thức với rau sống và sốt chanh."));
-
-        Map<String, String> caHoiNuongTime = new HashMap<>();
-        caHoiNuongTime.put("prep_time", "15 phút");
-        caHoiNuongTime.put("cook_time", "20 phút");
-
-//        Map<String, Object> caHoiNuongRating = new HashMap<>();
-//        caHoiNuongRating.put("average_rating", 4.8);
-//        caHoiNuongRating.put("number_of_ratings", 150);
+//        List<Step> bunThitNuongSteps = new ArrayList<>();
+//        bunThitNuongSteps.add(new Step(1, "", "Ướp thịt bò với tỏi và gia vị."));
+//        bunThitNuongSteps.add(new Step(2, "", "Nướng thịt bò cho đến khi chín."));
+//        bunThitNuongSteps.add(new Step(3, "", "Luộc bún tươi và xếp lên đĩa."));
+//        bunThitNuongSteps.add(new Step(4, "", "Đặt thịt bò lên bún và trang trí với hành tây thái lát."));
 //
-//        Map<String, Integer> caHoiNuongRatingsByStars = new HashMap<>();
-//        caHoiNuongRatingsByStars.put("5", 100);
-//        caHoiNuongRatingsByStars.put("4", 40);
-//        caHoiNuongRatingsByStars.put("3", 10);
-
-        recipes.add(new Recipe(
-                "Cá Hồi Nướng",
-                "Cá hồi nướng với hương vị tuyệt vời, phù hợp cho bữa tối nhẹ nhàng.",
-                "9vQ00cgYviaraZuulQiT",
-                "ihbWcbMTIzYUEaxttCIZ",     // Hải sản
-                caHoiNuongIngredients,
-                caHoiNuongSteps,
-                caHoiNuongTime,
-                2,
-                "https://example.com/ca_houi_nuong.jpg"
-        ));
-
-        // Recipe 4: Gà Rang Mặn
-        List<Recipe_Ingredient> gaRangManIngredients = new ArrayList<>();
-        gaRangManIngredients.add(new Recipe_Ingredient("JrAAx41In7Dd8R2v471g", 300));    // Thịt gà
-        gaRangManIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 3));     // Tỏi
-        gaRangManIngredients.add(new Recipe_Ingredient("JUxYaCYMf8j3xTYKbf5D", 2));   // Dầu mè
-        gaRangManIngredients.add(new Recipe_Ingredient("yplJ6Xd7s1MRZuedL90z", 1));   // Hành tây
-        gaRangManIngredients.add(new Recipe_Ingredient("yInk6h0mSvKH2Ouddi5K", 2));     // Nước tương
-
-        List<Step> gaRangManSteps = new ArrayList<>();
-        gaRangManSteps.add(new Step(1, "", "Ướp thịt gà với tỏi và nước tương."));
-        gaRangManSteps.add(new Step(2, "", "Chiên thịt gà với dầu mè cho đến khi chín vàng."));
-        gaRangManSteps.add(new Step(3, "", "Thêm hành tây vào và đảo đều cho đến khi hành mềm."));
-        gaRangManSteps.add(new Step(4, "", "Cho ra đĩa và thưởng thức."));
-
-        Map<String, String> gaRangManTime = new HashMap<>();
-        gaRangManTime.put("prep_time", "20 phút");
-        gaRangManTime.put("cook_time", "25 phút");
-
-//        Map<String, Object> gaRangManRating = new HashMap<>();
-//        gaRangManRating.put("average_rating", 4.6);
-//        gaRangManRating.put("number_of_ratings", 110);
+//        Map<String, String> bunThitNuongTime = new HashMap<>();
+//        bunThitNuongTime.put("prep_time", "20 phút");
+//        bunThitNuongTime.put("cook_time", "30 phút");
 //
-//        Map<String, Integer> gaRangManRatingsByStars = new HashMap<>();
-//        gaRangManRatingsByStars.put("5", 65);
-//        gaRangManRatingsByStars.put("4", 35);
-//        gaRangManRatingsByStars.put("3", 10);
-
-        recipes.add(new Recipe(
-                "Gà Rang Mặn",
-                "Thịt gà rang mặn với hương vị đậm đà, thích hợp cho bữa cơm gia đình.",
-                "9vQ00cgYviaraZuulQiT",
-                "GW2H6A2DdrFm1CgAyLfO",     // Món chính
-                gaRangManIngredients,
-                gaRangManSteps,
-                gaRangManTime,
-                4,
-                "https://example.com/ga_rang_man.jpg"
-        ));
-
-        // Recipe 5: Salad Trái Cây
-        List<Recipe_Ingredient> saladTraiCayIngredients = new ArrayList<>();
-        saladTraiCayIngredients.add(new Recipe_Ingredient("csnuA2vNLhxVxYIzWN0q", 2));   // Táo
-        saladTraiCayIngredients.add(new Recipe_Ingredient("Omymi9LiUEUcApfD5VFK", 2));   // Chuối
-        saladTraiCayIngredients.add(new Recipe_Ingredient("LuqtMHL8wm8BCkOpocl8", 1));    // Dứa
-        saladTraiCayIngredients.add(new Recipe_Ingredient("Cb3nYfFVOn1h1br0VtFY", 1));    // Dưa hấu
-        saladTraiCayIngredients.add(new Recipe_Ingredient("16gSh2Fafk8ohh6SF43e", 2));    // Nước cốt chanh
-        saladTraiCayIngredients.add(new Recipe_Ingredient("oc1gFnq94uI8R4jePmea", 1));    // Mật ong
-
-        List<Step> saladTraiCaySteps = new ArrayList<>();
-        saladTraiCaySteps.add(new Step(1, "", "Gọt vỏ và cắt trái cây thành miếng nhỏ."));
-        saladTraiCaySteps.add(new Step(2, "", "Trộn tất cả các loại trái cây với nhau."));
-        saladTraiCaySteps.add(new Step(3, "", "Thêm nước cốt chanh và mật ong vào trộn đều."));
-        saladTraiCaySteps.add(new Step(4, "", "Để lạnh trước khi thưởng thức."));
-
-        Map<String, String> saladTraiCayTime = new HashMap<>();
-        saladTraiCayTime.put("prep_time", "15 phút");
-        saladTraiCayTime.put("cook_time", "0 phút");
-
-//        Map<String, Object> saladTraiCayRating = new HashMap<>();
-//        saladTraiCayRating.put("average_rating", 4.9);
-//        saladTraiCayRating.put("number_of_ratings", 85);
+////        Map<String, Object> bunThitNuongRating = new HashMap<>();
+////        bunThitNuongRating.put("average_rating", 4.5);
+////        bunThitNuongRating.put("number_of_ratings", 120);
+////
+////        Map<String, Integer> bunThitNuongRatingsByStars = new HashMap<>();
+////        bunThitNuongRatingsByStars.put("5", 80);
+////        bunThitNuongRatingsByStars.put("4", 30);
+////        bunThitNuongRatingsByStars.put("3", 10);
 //
-//        Map<String, Integer> saladTraiCayRatingsByStars = new HashMap<>();
-//        saladTraiCayRatingsByStars.put("5", 70);
-//        saladTraiCayRatingsByStars.put("4", 15);
-//        saladTraiCayRatingsByStars.put("3", 0);
-
-        recipes.add(new Recipe(
-                "Salad Trái Cây",
-                "Salad trái cây tươi ngon, bổ dưỡng và dễ làm, thích hợp cho bữa ăn nhẹ.",
-                "9vQ00cgYviaraZuulQiT",
-                "zDllvqM6L8XqtPudpoFu",     // Món ăn vặt
-                saladTraiCayIngredients,
-                saladTraiCaySteps,
-                saladTraiCayTime,
-                2,
-                "https://example.com/salad_trai_cay.jpg"
-        ));
-
-        // Recipe 6: Bánh Flan
-        List<Recipe_Ingredient> banhFlanIngredients = new ArrayList<>();
-        banhFlanIngredients.add(new Recipe_Ingredient("0uru7erg4vVASVKCPrYY", 500));  // Sữa tươi
-        banhFlanIngredients.add(new Recipe_Ingredient("Nw6W4jLpIA5QPSLtkbVw", 4));   // Trứng gà
-        banhFlanIngredients.add(new Recipe_Ingredient("22UAJWl83nfj7TNeUbyI", 100));    // Đường
-        banhFlanIngredients.add(new Recipe_Ingredient("ompmATag4FVVv13tfCJr", 1));  // Tinh chất vani
-
-        List<Step> banhFlanSteps = new ArrayList<>();
-        banhFlanSteps.add(new Step(1, "", "Đun sữa tươi với đường cho đến khi tan chảy."));
-        banhFlanSteps.add(new Step(2, "", "Khuấy trứng gà với tinh chất vani."));
-        banhFlanSteps.add(new Step(3, "", "Trộn sữa và trứng lại với nhau, rồi đổ vào khuôn."));
-        banhFlanSteps.add(new Step(4, "", "Hấp cách thủy trong khoảng 45 phút cho đến khi bánh chín."));
-
-        Map<String, String> banhFlanTime = new HashMap<>();
-        banhFlanTime.put("prep_time", "15 phút");
-        banhFlanTime.put("cook_time", "45 phút");
-
-//        Map<String, Object> banhFlanRating = new HashMap<>();
-//        banhFlanRating.put("average_rating", 4.8);
-//        banhFlanRating.put("number_of_ratings", 120);
+//        recipes.add(new Recipe(
+//                "Bún Thịt Nướng",
+//                "Món bún thịt nướng thơm ngon, dễ làm với thịt bò nướng và bún tươi.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "GW2H6A2DdrFm1CgAyLfO",     // Món chính
+//                bunThitNuongIngredients,
+//                bunThitNuongSteps,
+//                bunThitNuongTime,
+//                2,
+//                "https://example.com/bun_thit_nuong.jpg"
+//        ));
 //
-//        Map<String, Integer> banhFlanRatingsByStars = new HashMap<>();
-//        banhFlanRatingsByStars.put("5", 85);
-//        banhFlanRatingsByStars.put("4", 30);
-//        banhFlanRatingsByStars.put("3", 5);
-
-        recipes.add(new Recipe(
-                "Bánh Flan",
-                "Bánh flan mịn màng với hương vị ngọt ngào, là món tráng miệng lý tưởng.",
-                "9vQ00cgYviaraZuulQiT",
-                "E1htmV4BrBoZK5OpGTII",     // Các loại bánh
-                banhFlanIngredients,
-                banhFlanSteps,
-                banhFlanTime,
-                4,
-                "https://example.com/banh_flan.jpg"
-        ));
-
-        // Insert data
-        for (Recipe recipe : recipes) {
-            db.collection("recipes")
-                    .add(recipe)
-                    .addOnSuccessListener(documentReference -> {
-                        Log.i("insert recipe", recipe.getTitle());
-                    })
-                    .addOnFailureListener(e -> {
-                        // Xử lý lỗi
-                        Log.e("error", e.getMessage().toString());
-                    });
-        }
-    }
+//        // Recipe 2: Xôi Gấc
+//        List<Recipe_Ingredient> xoiGacIngredients = new ArrayList<>();
+//        xoiGacIngredients.add(new Recipe_Ingredient("DhcgrGNyKBuTPOdolW3M", 300));  // Gạo nếp
+//        xoiGacIngredients.add(new Recipe_Ingredient("Rixa5H6yrhKuT8a3Xrrq", 1));     // Gấc
+//        xoiGacIngredients.add(new Recipe_Ingredient("JYe5lRUwdpoLDhcCdfzm", 100));    // Dừa
+//
+//        List<Step> xoiGacSteps = new ArrayList<>();
+//        xoiGacSteps.add(new Step(1, "", "Ngâm gạo nếp trong nước qua đêm."));
+//        xoiGacSteps.add(new Step(2, "", "Trộn gạo nếp với thịt gấc đã làm sạch."));
+//        xoiGacSteps.add(new Step(3, "", "Hấp xôi cho đến khi chín."));
+//        xoiGacSteps.add(new Step(4, "", "Rắc dừa nạo lên xôi trước khi ăn."));
+//
+//        Map<String, String> xoiGacTime = new HashMap<>();
+//        xoiGacTime.put("prep_time", "10 phút");
+//        xoiGacTime.put("cook_time", "40 phút");
+//
+////        Map<String, Object> xoiGacRating = new HashMap<>();
+////        xoiGacRating.put("average_rating", 4.7);
+////        xoiGacRating.put("number_of_ratings", 95);
+////
+////        Map<String, Integer> xoiGacRatingsByStars = new HashMap<>();
+////        xoiGacRatingsByStars.put("5", 70);
+////        xoiGacRatingsByStars.put("4", 20);
+////        xoiGacRatingsByStars.put("3", 5);
+//
+//        recipes.add(new Recipe(
+//                "Xôi Gấc",
+//                "Xôi gấc truyền thống với màu đỏ tươi đẹp mắt và hương vị đặc trưng.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "zjUpySjqvXmnmCcqAR4j",     // Ăn sáng
+//                xoiGacIngredients,
+//                xoiGacSteps,
+//                xoiGacTime,
+//                3,
+//                "https://example.com/xoi_gac.jpg"
+//        ));
+//
+//        // Recipe 3: Cá Hồi Nướng
+//        List<Recipe_Ingredient> caHoiNuongIngredients = new ArrayList<>();
+//        caHoiNuongIngredients.add(new Recipe_Ingredient("h4bJrNUBCQSVsNcqgrm9", 250));  // Cá hồi
+//        caHoiNuongIngredients.add(new Recipe_Ingredient("C8ePV1nXAGzrfkHQkUPa", 2));    // Dầu olive
+//        caHoiNuongIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 2));    // Tỏi
+//
+//        List<Step> caHoiNuongSteps = new ArrayList<>();
+//        caHoiNuongSteps.add(new Step(1, "", "Ướp cá hồi với dầu olive và tỏi."));
+//        caHoiNuongSteps.add(new Step(2, "", "Nướng cá hồi cho đến khi chín vàng."));
+//        caHoiNuongSteps.add(new Step(3, "", "Thưởng thức với rau sống và sốt chanh."));
+//
+//        Map<String, String> caHoiNuongTime = new HashMap<>();
+//        caHoiNuongTime.put("prep_time", "15 phút");
+//        caHoiNuongTime.put("cook_time", "20 phút");
+//
+////        Map<String, Object> caHoiNuongRating = new HashMap<>();
+////        caHoiNuongRating.put("average_rating", 4.8);
+////        caHoiNuongRating.put("number_of_ratings", 150);
+////
+////        Map<String, Integer> caHoiNuongRatingsByStars = new HashMap<>();
+////        caHoiNuongRatingsByStars.put("5", 100);
+////        caHoiNuongRatingsByStars.put("4", 40);
+////        caHoiNuongRatingsByStars.put("3", 10);
+//
+//        recipes.add(new Recipe(
+//                "Cá Hồi Nướng",
+//                "Cá hồi nướng với hương vị tuyệt vời, phù hợp cho bữa tối nhẹ nhàng.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "ihbWcbMTIzYUEaxttCIZ",     // Hải sản
+//                caHoiNuongIngredients,
+//                caHoiNuongSteps,
+//                caHoiNuongTime,
+//                2,
+//                "https://example.com/ca_houi_nuong.jpg"
+//        ));
+//
+//        // Recipe 4: Gà Rang Mặn
+//        List<Recipe_Ingredient> gaRangManIngredients = new ArrayList<>();
+//        gaRangManIngredients.add(new Recipe_Ingredient("JrAAx41In7Dd8R2v471g", 300));    // Thịt gà
+//        gaRangManIngredients.add(new Recipe_Ingredient("mz5GpSe40Yeh5bGoenDT", 3));     // Tỏi
+//        gaRangManIngredients.add(new Recipe_Ingredient("JUxYaCYMf8j3xTYKbf5D", 2));   // Dầu mè
+//        gaRangManIngredients.add(new Recipe_Ingredient("yplJ6Xd7s1MRZuedL90z", 1));   // Hành tây
+//        gaRangManIngredients.add(new Recipe_Ingredient("yInk6h0mSvKH2Ouddi5K", 2));     // Nước tương
+//
+//        List<Step> gaRangManSteps = new ArrayList<>();
+//        gaRangManSteps.add(new Step(1, "", "Ướp thịt gà với tỏi và nước tương."));
+//        gaRangManSteps.add(new Step(2, "", "Chiên thịt gà với dầu mè cho đến khi chín vàng."));
+//        gaRangManSteps.add(new Step(3, "", "Thêm hành tây vào và đảo đều cho đến khi hành mềm."));
+//        gaRangManSteps.add(new Step(4, "", "Cho ra đĩa và thưởng thức."));
+//
+//        Map<String, String> gaRangManTime = new HashMap<>();
+//        gaRangManTime.put("prep_time", "20 phút");
+//        gaRangManTime.put("cook_time", "25 phút");
+//
+////        Map<String, Object> gaRangManRating = new HashMap<>();
+////        gaRangManRating.put("average_rating", 4.6);
+////        gaRangManRating.put("number_of_ratings", 110);
+////
+////        Map<String, Integer> gaRangManRatingsByStars = new HashMap<>();
+////        gaRangManRatingsByStars.put("5", 65);
+////        gaRangManRatingsByStars.put("4", 35);
+////        gaRangManRatingsByStars.put("3", 10);
+//
+//        recipes.add(new Recipe(
+//                "Gà Rang Mặn",
+//                "Thịt gà rang mặn với hương vị đậm đà, thích hợp cho bữa cơm gia đình.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "GW2H6A2DdrFm1CgAyLfO",     // Món chính
+//                gaRangManIngredients,
+//                gaRangManSteps,
+//                gaRangManTime,
+//                4,
+//                "https://example.com/ga_rang_man.jpg"
+//        ));
+//
+//        // Recipe 5: Salad Trái Cây
+//        List<Recipe_Ingredient> saladTraiCayIngredients = new ArrayList<>();
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("csnuA2vNLhxVxYIzWN0q", 2));   // Táo
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("Omymi9LiUEUcApfD5VFK", 2));   // Chuối
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("LuqtMHL8wm8BCkOpocl8", 1));    // Dứa
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("Cb3nYfFVOn1h1br0VtFY", 1));    // Dưa hấu
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("16gSh2Fafk8ohh6SF43e", 2));    // Nước cốt chanh
+//        saladTraiCayIngredients.add(new Recipe_Ingredient("oc1gFnq94uI8R4jePmea", 1));    // Mật ong
+//
+//        List<Step> saladTraiCaySteps = new ArrayList<>();
+//        saladTraiCaySteps.add(new Step(1, "", "Gọt vỏ và cắt trái cây thành miếng nhỏ."));
+//        saladTraiCaySteps.add(new Step(2, "", "Trộn tất cả các loại trái cây với nhau."));
+//        saladTraiCaySteps.add(new Step(3, "", "Thêm nước cốt chanh và mật ong vào trộn đều."));
+//        saladTraiCaySteps.add(new Step(4, "", "Để lạnh trước khi thưởng thức."));
+//
+//        Map<String, String> saladTraiCayTime = new HashMap<>();
+//        saladTraiCayTime.put("prep_time", "15 phút");
+//        saladTraiCayTime.put("cook_time", "0 phút");
+//
+////        Map<String, Object> saladTraiCayRating = new HashMap<>();
+////        saladTraiCayRating.put("average_rating", 4.9);
+////        saladTraiCayRating.put("number_of_ratings", 85);
+////
+////        Map<String, Integer> saladTraiCayRatingsByStars = new HashMap<>();
+////        saladTraiCayRatingsByStars.put("5", 70);
+////        saladTraiCayRatingsByStars.put("4", 15);
+////        saladTraiCayRatingsByStars.put("3", 0);
+//
+//        recipes.add(new Recipe(
+//                "Salad Trái Cây",
+//                "Salad trái cây tươi ngon, bổ dưỡng và dễ làm, thích hợp cho bữa ăn nhẹ.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "zDllvqM6L8XqtPudpoFu",     // Món ăn vặt
+//                saladTraiCayIngredients,
+//                saladTraiCaySteps,
+//                saladTraiCayTime,
+//                2,
+//                "https://example.com/salad_trai_cay.jpg"
+//        ));
+//
+//        // Recipe 6: Bánh Flan
+//        List<Recipe_Ingredient> banhFlanIngredients = new ArrayList<>();
+//        banhFlanIngredients.add(new Recipe_Ingredient("0uru7erg4vVASVKCPrYY", 500));  // Sữa tươi
+//        banhFlanIngredients.add(new Recipe_Ingredient("Nw6W4jLpIA5QPSLtkbVw", 4));   // Trứng gà
+//        banhFlanIngredients.add(new Recipe_Ingredient("22UAJWl83nfj7TNeUbyI", 100));    // Đường
+//        banhFlanIngredients.add(new Recipe_Ingredient("ompmATag4FVVv13tfCJr", 1));  // Tinh chất vani
+//
+//        List<Step> banhFlanSteps = new ArrayList<>();
+//        banhFlanSteps.add(new Step(1, "", "Đun sữa tươi với đường cho đến khi tan chảy."));
+//        banhFlanSteps.add(new Step(2, "", "Khuấy trứng gà với tinh chất vani."));
+//        banhFlanSteps.add(new Step(3, "", "Trộn sữa và trứng lại với nhau, rồi đổ vào khuôn."));
+//        banhFlanSteps.add(new Step(4, "", "Hấp cách thủy trong khoảng 45 phút cho đến khi bánh chín."));
+//
+//        Map<String, String> banhFlanTime = new HashMap<>();
+//        banhFlanTime.put("prep_time", "15 phút");
+//        banhFlanTime.put("cook_time", "45 phút");
+//
+////        Map<String, Object> banhFlanRating = new HashMap<>();
+////        banhFlanRating.put("average_rating", 4.8);
+////        banhFlanRating.put("number_of_ratings", 120);
+////
+////        Map<String, Integer> banhFlanRatingsByStars = new HashMap<>();
+////        banhFlanRatingsByStars.put("5", 85);
+////        banhFlanRatingsByStars.put("4", 30);
+////        banhFlanRatingsByStars.put("3", 5);
+//
+//        recipes.add(new Recipe(
+//                "Bánh Flan",
+//                "Bánh flan mịn màng với hương vị ngọt ngào, là món tráng miệng lý tưởng.",
+//                "9vQ00cgYviaraZuulQiT",
+//                "E1htmV4BrBoZK5OpGTII",     // Các loại bánh
+//                banhFlanIngredients,
+//                banhFlanSteps,
+//                banhFlanTime,
+//                4,
+//                "https://example.com/banh_flan.jpg"
+//        ));
+//
+//        // Insert data
+//        for (Recipe recipe : recipes) {
+//            db.collection("recipes")
+//                    .add(recipe)
+//                    .addOnSuccessListener(documentReference -> {
+//                        Log.i("insert recipe", recipe.getTitle());
+//                    })
+//                    .addOnFailureListener(e -> {
+//                        // Xử lý lỗi
+//                        Log.e("error", e.getMessage().toString());
+//                    });
+//        }
+//    }
 
     // Phương thức chuyển đổi dữ liệu models -> dtos
     public RecipeDto convertToDto(@NonNull Recipe recipe) {
@@ -291,6 +291,7 @@ public class RecipeRepository {
         recipeDto.setServings(recipe.getServings());
         recipeDto.setImageUrl(recipe.getImageUrl());
         recipeDto.setTime(recipe.getTime());
+        recipeDto.setVideoUrl(recipe.getVideoUrl());
         return recipeDto;
     }
 

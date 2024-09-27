@@ -18,6 +18,7 @@ public class RecipeDto {
     private Map<String, String> time; // Thời gian chuẩn bị, thời gian nấu
     private int servings;
     private String imageUrl;
+    private String videoUrl;
     private List<CommentDto> commentDtos;
     private float average_rating;   // Đánh giá trung bình
     private int number_of_ratings;  // Tổng số đánh giá
@@ -160,6 +161,14 @@ public class RecipeDto {
 
     public void setRatingByStars(Map<String, Integer> ratingByStars) {
         this.ratingByStars = ratingByStars;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
     }
 
     @Override
