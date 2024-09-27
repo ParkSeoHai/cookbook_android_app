@@ -41,7 +41,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         RecipeDto recipe = mRecipes.get(position);
         holder.recipeTitle.setText(recipe.getTitle());
         holder.recipeId = recipe.getRecipeId();
-
+        float rating = recipe.getAverage_rating(); // Lấy số sao từ cơ sở dữ liệu
+        String starCountText = String.format("%.1f ", rating) + " ";
+        holder.starCount.setText(starCountText);
 //        RequestOptions options = new RequestOptions()
 //                .transform(new RoundedCorners(20)); // border-radius
 
@@ -63,11 +65,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         String recipeId = null;
         ImageView recipeImage;
         TextView recipeTitle;
-
+        public TextView starCount; // Khai báo TextView cho số sao
+        public ImageView starImage;
         public RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             recipeImage = itemView.findViewById(R.id.recipeImage);
             recipeTitle = itemView.findViewById(R.id.recipeTitle);
+            starCount = itemView.findViewById(R.id.starCount); // Ánh xạ TextView
+            starImage = itemView.findViewById(R.id.starImage);
 
             recipeImage.setOnClickListener(new View.OnClickListener() {
                 @Override

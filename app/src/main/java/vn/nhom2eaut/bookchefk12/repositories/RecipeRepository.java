@@ -312,6 +312,7 @@ public class RecipeRepository {
 
                                 // Lấy bình luận
                                 CommentRepository commentRepository = new CommentRepository();
+
                                 Task<Void> taskComment = commentRepository.allByRecipeId(recipeDto.getRecipeId(), new FirestoreCallback<List<CommentDto>>() {
                                     @Override
                                     public void onSuccess(List<CommentDto> commentDtos) {
@@ -347,7 +348,6 @@ public class RecipeRepository {
                 });
         return taskCompletionSource.getTask();
     }
-
     // Tính toán rating
     private void updateRatings(RecipeDto recipeDto) {
         int number_of_ratings = 0;      // Tổng số đánh giá
