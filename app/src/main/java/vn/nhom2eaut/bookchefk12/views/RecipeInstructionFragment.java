@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 
 import vn.nhom2eaut.bookchefk12.R;
 import vn.nhom2eaut.bookchefk12.controllers.RecipeController;
@@ -68,6 +70,8 @@ public class RecipeInstructionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -75,6 +79,12 @@ public class RecipeInstructionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_instruction, container, false);
+        // Thiết lập WebView và hiển thị video
+        WebView webView = view.findViewById(R.id.webview);
+        String video="<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/V2KCAfHjySQ?si=BiQKoLpDrwljm1pd\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>";
+        webView.loadData(video, "text/html", "utf-8");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebChromeClient(new WebChromeClient());
         // Thiết lập RecyclerView
         recyclerView = view.findViewById(R.id.recycler_view_instructions);
         instructionAdapter = new InstructionAdapter(new ArrayList<>());
