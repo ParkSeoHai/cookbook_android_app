@@ -1,5 +1,6 @@
 package vn.nhom2eaut.bookchefk12.views;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,9 +52,14 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             } else if (id == R.id.nav_favourites) {
                 // Xử lý cho Favourites
-                fragment = new FavoriteFragment(user_id);
-                loadFragment(fragment);
-                return true;
+                if (user_id == null) {
+                    showLoginDialog();
+                    return false;
+                } else {
+                    fragment = new FavoriteFragment(user_id);
+                    loadFragment(fragment);
+                    return true;
+                }
             } else if (id == R.id.nav_menu) {
                 // Xử lý cho menu
                 fragment = new CategoryFragment(getSupportFragmentManager());
@@ -94,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void showLoginDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Yêu cầu đăng nhập")
+                .setMessage("Bạn cần đăng nhập để sử dụng tính năng này. Bạn có muốn chuyển đến trang đăng nhập không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Chuyển người dùng đến trang đăng nhập
+                    startActivity(new Intent(MainActivity.this, loginActivity.class));
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .setCancelable(false)
+                .show();
+    }
+
 
     private void loadHomeFragmentAndFocus() {
         // Tạo một instance mới của HomeFragment

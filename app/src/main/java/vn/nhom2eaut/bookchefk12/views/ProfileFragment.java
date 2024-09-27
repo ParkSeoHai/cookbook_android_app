@@ -96,29 +96,46 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        // Kiểm tra userId, nếu null thì hiển thị dialog
+        if (userId == null || userId.isEmpty()) {
+            showLoginDialog();
+            return null;
+        }
 
-        // Khởi tạo các View
+        // Khởi tạo các view khác
         profileImage = view.findViewById(R.id.userProfileImage);
         userName = view.findViewById(R.id.userName);
         userEmail = view.findViewById(R.id.userEmail);
         btnLogout = view.findViewById(R.id.logoutButton);
 
+        // Lấy dữ liệu hồ sơ người dùng
         getProfile(userId);
 
         profileImage.setOnClickListener(v -> openImagePicker());
 
-        // Xử lý sự kiện nút đăng xuất
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleLogout();
-            }
-        });
+        btnLogout.setOnClickListener(v -> handleLogout());
 
         return view;
     }
+
+
+    private void showLoginDialog() {
+        new androidx.appcompat.app.AlertDialog.Builder(getContext())
+                .setTitle("Thông báo")
+                .setMessage("Bạn chưa đăng nhập. Bạn có muốn chuyển về trang đăng nhập không?")
+                .setPositiveButton("Có", (dialog, which) -> {
+                    // Chuyển về trang đăng nhập
+                    startActivity(new Intent(getContext(), loginActivity.class));
+                })
+                .setNegativeButton("Không", (dialog, which) -> {
+                    // Đóng dialog, có thể để trống nếu không muốn xử lý gì
+                    dialog.dismiss();
+                })
+                .setCancelable(false) // Không cho phép đóng dialog bằng cách nhấn ngoài
+                .show();
+    }
+
 
     private void openImagePicker() {
         Intent intent = new Intent();
@@ -201,6 +218,6 @@ public class ProfileFragment extends Fragment {
         editor.clear();
         editor.commit();
         // Chuyển sang trang đăng nhập
-        startActivity(new Intent(getContext(), loginActivity.class));
+        startActivity(new Intent(getContext(), MainActivity.class));
     }
 }

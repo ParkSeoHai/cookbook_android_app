@@ -13,10 +13,6 @@ glide = "4.15.1"
 glide-transformations-version = "4.3.0"
 firebaseStorage = "21.0.0"
 
-firebase-bom = "33.3.0"  # Phiên bản Firebase BoM
-firebase-dynamic-links = "22.2.0"  # Phiên bản Firebase Dynamic Links
-firebase-analytics = "21.3.0"  # Phiên bản Firebase Analytics
-
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -30,10 +26,6 @@ glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 glide-transformations = { module = "jp.wasabeef:glide-transformations", version.ref = "glide-transformations-version" }
 firebase-storage = { group = "com.google.firebase", name = "firebase-storage", version.ref = "firebaseStorage" }
-
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
-firebase-dynamic-links = { module = "com.google.firebase:firebase-dynamic-links", version.ref = "firebase-dynamic-links" }
-firebase-analytics = { module = "com.google.firebase:firebase-analytics", version.ref = "firebase-analytics" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
