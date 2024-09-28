@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -24,8 +25,19 @@ import androidx.fragment.app.FragmentTransaction;
 import vn.nhom2eaut.bookchefk12.R;
 
 import vn.nhom2eaut.bookchefk12.controllers.UserController;
+import vn.nhom2eaut.bookchefk12.models.Recipe;
+import vn.nhom2eaut.bookchefk12.models.Recipe_Ingredient;
+import vn.nhom2eaut.bookchefk12.models.Step;
 import vn.nhom2eaut.bookchefk12.repositories.interfaces.FirestoreCallback;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
@@ -33,12 +45,88 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private String recipeId, userId;
     private Boolean recipeIsFavorite = false;
 
+    private Map<String, String> ingredientMap = new HashMap<>();
+
+    private void loadIngredientNames() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("ingredients").get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (DocumentSnapshot document : queryDocumentSnapshots) {
+                        String ingredientId = document.getId();
+                        String ingredientName = document.getString("name");
+                        ingredientMap.put(ingredientId, ingredientName);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getApplicationContext(), "Lỗi tải nguyên liệu", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private String getIngredientNameById(String ingredientId) {
+        return ingredientMap.getOrDefault(ingredientId, "Không rõ");
+    }
+
+
+    private void shareRecipe(String recipeId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("recipes").document(recipeId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Recipe recipe = documentSnapshot.toObject(Recipe.class);
+
+                        if (recipe != null) {
+                            StringBuilder shareBody = new StringBuilder();
+                            shareBody.append("Công thức: ").append(recipe.getTitle()).append("\n\n");
+                            shareBody.append("Mô tả: ").append(recipe.getDescription()).append("\n\n");
+                            shareBody.append("Thành phần: \n");
+
+                            for (Recipe_Ingredient ingredient : recipe.getIngredients()) {
+                                String ingredientName = getIngredientNameById(ingredient.getIngredientId());
+                                shareBody.append("- ").append(ingredientName).append(": ").append(ingredient.getQuantity()).append("\n");
+                            }
+
+                            shareBody.append("\nCách làm: \n");
+                            for (Step step : recipe.getSteps()) {
+                                shareBody.append(step.getStep_number()).append(". ").append(step.getInstruction()).append("\n");
+                            }
+
+                            shareBody.append("\nThời gian: Chuẩn bị - ")
+                                    .append(recipe.getTime().get("prep_time"))
+                                    .append(", Nấu - ")
+                                    .append(recipe.getTime().get("cook_time"))
+                                    .append("\n");
+
+                            shareBody.append("Khẩu phần: ").append(recipe.getServings()).append("\n");
+
+                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                            shareIntent.setType("text/plain");
+                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Công thức nấu ăn: " + recipe.getTitle());
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody.toString());
+
+                            startActivity(Intent.createChooser(shareIntent, "Chia sẻ công thức nấu ăn qua"));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Không tìm thấy công thức", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Lỗi khi lấy công thức", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_recipe_detail);
-
+        loadIngredientNames();
         Intent intent = getIntent();
         // Get recipe id từ itent
         recipeId = intent.getStringExtra("recipeId");
@@ -133,14 +221,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         showRatingDialog(); // Cho phép đánh giá nếu đã đăng nhập
                     }
                     return true;
-                }else if (item.getItemId() == R.id.action_share) {
+                } else if (item.getItemId() == R.id.action_share) {
                     // Gọi hàm tạo link chia sẻ khi người dùng chọn chia sẻ
+                    shareRecipe(recipeId); // Truyền recipeId vào đây
                     return true;
                 }
 
                 return false;
             }
-
         });
 
         // Hiển thị PopupMenu
